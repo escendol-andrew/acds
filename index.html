@@ -1,0 +1,2698 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ACDS - Academic & Career Development System</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+/* ============================================================
+   ACDS - Academic & Career Development System
+   Complete Stylesheet
+   ============================================================ */
+
+/* CSS Reset & Variables */
+:root {
+  --primary: #1565C0;
+  --secondary: #0D47A1;
+  --accent: #42A5F5;
+  --success: #2E7D32;
+  --warning: #F57F17;
+  --danger: #C62828;
+  --bg: #F5F7FA;
+  --card: #FFFFFF;
+  --text: #263238;
+  --text-light: #607D8B;
+  --border: #E0E0E0;
+  --shadow: 0 2px 8px rgba(0,0,0,0.08);
+  --shadow-lg: 0 4px 16px rgba(0,0,0,0.12);
+  --radius: 12px;
+  --radius-sm: 8px;
+  --sidebar-w: 260px;
+  --navbar-h: 60px;
+  --transition: all 0.3s ease;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ===================== LOGIN PAGE ===================== */
+#loginPage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 50%, var(--accent) 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+#loginPage::before {
+  content: '';
+  position: absolute;
+  width: 600px; height: 600px;
+  background: rgba(255,255,255,0.03);
+  border-radius: 50%;
+  top: -200px; right: -200px;
+}
+
+#loginPage::after {
+  content: '';
+  position: absolute;
+  width: 400px; height: 400px;
+  background: rgba(255,255,255,0.03);
+  border-radius: 50%;
+  bottom: -100px; left: -100px;
+}
+
+.login-box {
+  background: var(--card);
+  border-radius: 20px;
+  padding: 48px 40px;
+  width: 420px;
+  max-width: 95vw;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  position: relative;
+  z-index: 1;
+  text-align: center;
+}
+
+.login-logo {
+  font-size: 48px;
+  margin-bottom: 8px;
+}
+
+.login-box h1 {
+  font-size: 24px;
+  color: var(--primary);
+  margin-bottom: 4px;
+  font-weight: 700;
+}
+
+.login-box .subtitle {
+  color: var(--text-light);
+  font-size: 13px;
+  margin-bottom: 32px;
+}
+
+.form-group {
+  margin-bottom: 18px;
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+.form-group input, .form-group select, .form-group textarea {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  transition: var(--transition);
+  outline: none;
+  font-family: inherit;
+}
+
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(21,101,192,0.1);
+}
+
+.form-group textarea { resize: vertical; min-height: 80px; }
+
+.btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: inherit;
+}
+
+.btn-primary { background: var(--primary); color: #fff; }
+.btn-primary:hover { background: var(--secondary); transform: translateY(-1px); box-shadow: var(--shadow); }
+.btn-success { background: var(--success); color: #fff; }
+.btn-success:hover { background: #1B5E20; }
+.btn-warning { background: var(--warning); color: #fff; }
+.btn-danger { background: var(--danger); color: #fff; }
+.btn-danger:hover { background: #B71C1C; }
+.btn-outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); }
+.btn-outline:hover { background: var(--primary); color: #fff; }
+.btn-sm { padding: 8px 16px; font-size: 12px; }
+.btn-full { width: 100%; justify-content: center; }
+
+.btn-icon {
+  width: 36px; height: 36px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  cursor: pointer;
+  transition: var(--transition);
+  font-size: 16px;
+}
+.btn-icon:hover { background: var(--bg); }
+
+.login-roles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.login-roles button {
+  padding: 6px 14px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: var(--bg);
+  font-size: 11px;
+  cursor: pointer;
+  transition: var(--transition);
+  color: var(--text);
+}
+.login-roles button:hover { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+/* ===================== MAIN APP LAYOUT ===================== */
+#appPage { display: none; }
+
+.navbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--navbar-h);
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  z-index: 100;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--primary);
+  min-width: var(--sidebar-w);
+}
+
+.navbar-brand span { font-size: 24px; }
+
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: var(--text);
+  margin-right: 12px;
+}
+
+.navbar-right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.navbar-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 14px;
+  background: var(--bg);
+  border-radius: 24px;
+  cursor: default;
+}
+
+.navbar-avatar {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.navbar-user-info { line-height: 1.2; }
+.navbar-user-info .name { font-size: 13px; font-weight: 600; }
+.navbar-user-info .role { font-size: 11px; color: var(--text-light); }
+
+.btn-logout {
+  padding: 8px 16px;
+  background: none;
+  border: 1px solid var(--danger);
+  color: var(--danger);
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+.btn-logout:hover { background: var(--danger); color: #fff; }
+
+/* ===================== SIDEBAR ===================== */
+.sidebar {
+  position: fixed;
+  top: var(--navbar-h);
+  left: 0;
+  width: var(--sidebar-w);
+  height: calc(100vh - var(--navbar-h));
+  background: var(--card);
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+  z-index: 90;
+  transition: var(--transition);
+  padding: 16px 0;
+}
+
+.sidebar-menu { list-style: none; }
+
+.sidebar-menu li a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 24px;
+  color: var(--text);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: var(--transition);
+  border-left: 3px solid transparent;
+}
+
+.sidebar-menu li a:hover {
+  background: rgba(21,101,192,0.05);
+  color: var(--primary);
+}
+
+.sidebar-menu li a.active {
+  background: rgba(21,101,192,0.08);
+  color: var(--primary);
+  border-left-color: var(--primary);
+  font-weight: 600;
+}
+
+.sidebar-menu li a .icon {
+  font-size: 20px;
+  width: 28px;
+  text-align: center;
+}
+
+.sidebar-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 12px 24px;
+}
+
+.sidebar-section-title {
+  padding: 8px 24px 4px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ===================== MAIN CONTENT ===================== */
+.main-content {
+  margin-left: var(--sidebar-w);
+  margin-top: var(--navbar-h);
+  padding: 24px;
+  min-height: calc(100vh - var(--navbar-h));
+}
+
+.page { display: none; }
+.page.active { display: block; animation: fadeIn 0.3s ease; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.page-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.page-subtitle {
+  color: var(--text-light);
+  font-size: 14px;
+  margin-bottom: 24px;
+}
+
+/* Cards */
+.card {
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 24px;
+  margin-bottom: 20px;
+  transition: var(--transition);
+}
+
+.card:hover { box-shadow: var(--shadow-lg); }
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.card-header h3 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.card-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+
+/* Stat Cards */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.stat-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transition: var(--transition);
+  border-left: 4px solid var(--primary);
+}
+
+.stat-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+
+.stat-card.green { border-left-color: var(--success); }
+.stat-card.amber { border-left-color: var(--warning); }
+.stat-card.red { border-left-color: var(--danger); }
+.stat-card.blue { border-left-color: var(--accent); }
+
+.stat-icon {
+  width: 48px; height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  background: rgba(21,101,192,0.1);
+  color: var(--primary);
+  flex-shrink: 0;
+}
+
+.stat-card.green .stat-icon { background: rgba(46,125,50,0.1); color: var(--success); }
+.stat-card.amber .stat-icon { background: rgba(245,127,23,0.1); color: var(--warning); }
+
+.stat-info { flex: 1; }
+.stat-value { font-size: 28px; font-weight: 700; line-height: 1.2; }
+.stat-label { font-size: 12px; color: var(--text-light); font-weight: 500; }
+
+/* Grid layouts */
+.grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 20px; }
+.grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+
+/* Tables */
+.table-container {
+  overflow-x: auto;
+  border-radius: var(--radius-sm);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+table th {
+  background: var(--bg);
+  padding: 12px 14px;
+  text-align: left;
+  font-weight: 600;
+  color: var(--text);
+  border-bottom: 2px solid var(--border);
+  white-space: nowrap;
+}
+
+table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+}
+
+table tbody tr:hover { background: rgba(21,101,192,0.03); }
+
+.badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.badge-blue { background: rgba(21,101,192,0.1); color: var(--primary); }
+.badge-green { background: rgba(46,125,50,0.1); color: var(--success); }
+.badge-amber { background: rgba(245,127,23,0.1); color: var(--warning); }
+.badge-red { background: rgba(198,40,40,0.1); color: var(--danger); }
+
+/* Toolbar */
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.toolbar .search-box {
+  flex: 1;
+  min-width: 200px;
+  position: relative;
+}
+
+.toolbar .search-box input {
+  width: 100%;
+  padding: 10px 14px 10px 38px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  outline: none;
+  transition: var(--transition);
+}
+
+.toolbar .search-box input:focus { border-color: var(--primary); }
+
+.toolbar .search-box::before {
+  content: '🔍';
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 14px;
+}
+
+.toolbar select {
+  padding: 10px 14px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  outline: none;
+  background: var(--card);
+  cursor: pointer;
+}
+
+/* Modal */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 200;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.2s ease;
+}
+
+.modal-overlay.show { display: flex; }
+
+.modal {
+  background: var(--card);
+  border-radius: var(--radius);
+  width: 600px;
+  max-width: 95vw;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow-lg);
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border);
+}
+
+.modal-header h3 { font-size: 18px; font-weight: 700; }
+
+.modal-close {
+  width: 32px; height: 32px;
+  border: none;
+  background: var(--bg);
+  border-radius: 50%;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+}
+
+.modal-close:hover { background: var(--danger); color: #fff; }
+
+.modal-body { padding: 24px; }
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 16px 24px;
+  border-top: 1px solid var(--border);
+}
+
+/* Toast */
+.toast-container {
+  position: fixed;
+  top: 80px;
+  right: 24px;
+  z-index: 300;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.toast {
+  padding: 14px 20px;
+  border-radius: var(--radius-sm);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 500;
+  box-shadow: var(--shadow-lg);
+  animation: slideInRight 0.3s ease;
+  min-width: 280px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+@keyframes slideInRight {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+.toast-success { background: var(--success); }
+.toast-error { background: var(--danger); }
+.toast-info { background: var(--primary); }
+.toast-warning { background: var(--warning); }
+
+/* Progress bar */
+.progress-bar {
+  height: 8px;
+  background: var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 8px 0;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.5s ease;
+  background: var(--primary);
+}
+
+.progress-fill.green { background: var(--success); }
+.progress-fill.amber { background: var(--warning); }
+
+/* Profile section */
+.profile-header {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.profile-avatar {
+  width: 100px; height: 100px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.profile-info h2 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+.profile-info p { color: var(--text-light); font-size: 14px; }
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 12px;
+}
+
+.info-item {
+  padding: 12px;
+  background: var(--bg);
+  border-radius: var(--radius-sm);
+}
+
+.info-item label {
+  display: block;
+  font-size: 11px;
+  color: var(--text-light);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  margin-bottom: 4px;
+}
+
+.info-item span { font-size: 14px; font-weight: 500; }
+
+/* Tabs */
+.tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 20px;
+  border-bottom: 2px solid var(--border);
+  overflow-x: auto;
+}
+
+.tab-btn {
+  padding: 10px 20px;
+  border: none;
+  background: none;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-light);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+
+.tab-btn:hover { color: var(--primary); }
+.tab-btn.active { color: var(--primary); border-bottom-color: var(--primary); }
+
+.tab-content { display: none; }
+.tab-content.active { display: block; animation: fadeIn 0.3s ease; }
+
+/* Chart container */
+.chart-container {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+}
+
+.chart-container canvas {
+  max-height: 350px;
+}
+
+/* Holland Code bars */
+.holland-bar-container { margin-bottom: 12px; }
+
+.holland-bar-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+
+.holland-bar {
+  height: 24px;
+  background: var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.holland-bar-fill {
+  height: 100%;
+  border-radius: 12px;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  transition: width 0.8s ease;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 10px;
+  font-size: 11px;
+  color: #fff;
+  font-weight: 600;
+}
+
+/* Career match */
+.career-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  background: var(--bg);
+  border-radius: var(--radius-sm);
+  margin-bottom: 12px;
+  transition: var(--transition);
+}
+
+.career-card:hover { background: rgba(21,101,192,0.05); }
+
+.match-circle {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.match-high { background: rgba(46,125,50,0.15); color: var(--success); }
+.match-mid { background: rgba(245,127,23,0.15); color: var(--warning); }
+.match-low { background: rgba(198,40,40,0.15); color: var(--danger); }
+
+.career-info h4 { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+.career-info p { font-size: 12px; color: var(--text-light); }
+
+/* Timeline */
+.timeline { position: relative; padding-left: 24px; }
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 8px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--border);
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 20px;
+  padding-left: 20px;
+}
+
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -20px;
+  top: 4px;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: var(--primary);
+  border: 2px solid var(--card);
+  box-shadow: 0 0 0 2px var(--primary);
+}
+
+.timeline-item h4 { font-size: 14px; font-weight: 600; }
+.timeline-item p { font-size: 12px; color: var(--text-light); margin-top: 2px; }
+.timeline-item .date { font-size: 11px; color: var(--accent); font-weight: 600; }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%);
+  }
+  .sidebar.open { transform: translateX(0); box-shadow: var(--shadow-lg); }
+  .main-content { margin-left: 0; }
+  .menu-toggle { display: block; }
+  .navbar-brand { min-width: auto; }
+  .grid-2 { grid-template-columns: 1fr; }
+  .stats-grid { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
+  .profile-header { flex-direction: column; text-align: center; }
+  .info-grid { grid-template-columns: 1fr; }
+  .modal { width: 95vw; }
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 16px;
+  justify-content: center;
+}
+
+.pagination button {
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: var(--transition);
+}
+
+.pagination button:hover { background: var(--primary); color: #fff; border-color: var(--primary); }
+.pagination button.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+.pagination button:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-light); }
+
+/* Print styles */
+@media print {
+  .sidebar, .navbar, .btn, .toolbar { display: none !important; }
+  .main-content { margin: 0; padding: 16px; }
+  .card { box-shadow: none; border: 1px solid #ddd; }
+}
+
+/* Hidden utility */
+.hidden { display: none !important; }
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+.mt-2 { margin-top: 16px; }
+.mt-3 { margin-top: 24px; }
+.mb-2 { margin-bottom: 16px; }
+.gap-row { display: flex; gap: 12px; flex-wrap: wrap; }
+.gap-row > * { flex: 1; min-width: 200px; }
+</style>
+</head>
+<body>
+
+<!-- ==================== LOGIN PAGE ==================== -->
+<div id="loginPage">
+  <div class="login-box">
+    <div class="login-logo">🎓</div>
+    <h1>ACDS</h1>
+    <p class="subtitle">Academic & Career Development System</p>
+    <div class="form-group">
+      <label>Username</label>
+      <input type="text" id="loginUser" placeholder="Masukkan username" autocomplete="off">
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" id="loginPass" placeholder="Masukkan password">
+    </div>
+    <button class="btn btn-primary btn-full" onclick="doLogin()">🔐 Masuk</button>
+    <div class="login-roles">
+      <button onclick="quickLogin('siswa','siswa123')">👨‍🎓 Siswa</button>
+      <button onclick="quickLogin('guru','guru123')">👨‍🏫 Guru</button>
+      <button onclick="quickLogin('bk','bk123')">🧑‍⚕️ Guru BK</button>
+      <button onclick="quickLogin('pembina','pembina123')">🏋️ Pembina</button>
+      <button onclick="quickLogin('admin','admin123')">👤 Admin</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MAIN APP ==================== -->
+<div id="appPage">
+  <!-- Navbar -->
+  <nav class="navbar">
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+    <div class="navbar-brand">
+      <span>🎓</span> ACDS
+    </div>
+    <div class="navbar-right">
+      <div class="navbar-user">
+        <div class="navbar-avatar" id="navAvatar">A</div>
+        <div class="navbar-user-info">
+          <div class="name" id="navName">User</div>
+          <div class="role" id="navRole">Role</div>
+        </div>
+      </div>
+      <button class="btn-logout" onclick="doLogout()">🚪 Keluar</button>
+    </div>
+  </nav>
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-section-title">Menu Utama</div>
+    <ul class="sidebar-menu" id="sidebarMenu"></ul>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content" id="mainContent">
+    <!-- Pages are injected here by JS -->
+  </main>
+</div>
+
+<!-- Modal Container -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" id="modalBox">
+    <div class="modal-header">
+      <h3 id="modalTitle">Modal</h3>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-footer" id="modalFooter"></div>
+  </div>
+</div>
+
+<!-- Toast Container -->
+<div class="toast-container" id="toastContainer"></div>
+
+<script>
+/* ============================================================
+   ACDS - Academic & Career Development System
+   Complete JavaScript Application
+   ============================================================ */
+
+// ===================== DATA STORE =====================
+const STORAGE_KEY = 'acds_data';
+
+// Subjects list
+const SUBJECTS = [
+  'Matematika','Bahasa Indonesia','Bahasa Inggris','IPA','IPS',
+  'PAI','PPKN','Seni Budaya','PJOK','Informatika'
+];
+
+// RIASEC types
+const RIASEC = {
+  R: { name: 'Realistic', desc: 'Praktis, hands-on, fisik', icon: '🔧' },
+  I: { name: 'Investigative', desc: 'Analitis, saintifik, riset', icon: '🔬' },
+  A: { name: 'Artistic', desc: 'Kreatif, ekspresif, artistik', icon: '🎨' },
+  S: { name: 'Social', desc: 'Membantu, mengajar, peduli', icon: '🤝' },
+  E: { name: 'Enterprising', desc: 'Memimpin, bernegosiasi, bisnis', icon: '💼' },
+  C: { name: 'Conventional', desc: 'Terstruktur, detail, terorganisir', icon: '📊' }
+};
+
+// Multiple Intelligence types
+const MI_TYPES = [
+  'Linguistic','Logical-Mathematical','Spatial','Musical',
+  'Bodily-Kinesthetic','Interpersonal','Intrapersonal','Naturalistic'
+];
+
+// Career database
+const CAREERS = [
+  { name: 'Dokter', riasec: 'IS', desc: 'Profesi medis, mendiagnosis & mengobati', skills: ['Biologi','Kimia','Empati'], match: 0 },
+  { name: 'Insinyur', riasec: 'RI', desc: 'Merancang & membangun sistem teknis', skills: ['Matematika','Fisika','Problem Solving'], match: 0 },
+  { name: 'Programmer', riasec: 'IC', desc: 'Mengembangkan perangkat lunak', skills: ['Informatika','Logika','Matematika'], match: 0 },
+  { name: 'Guru/Dosen', riasec: 'SI', desc: 'Mendidik & mengajar', skills: ['Komunikasi','Kesabaran','Pengetahuan'], match: 0 },
+  { name: 'Pengacara', riasec: 'ES', desc: 'Praktik hukum & advokasi', skills: ['PPKN','Komunikasi','Analisis'], match: 0 },
+  { name: 'Akuntan', riasec: 'CE', desc: 'Mengelola keuangan & audit', skills: ['Matematika','Detail','Organisasi'], match: 0 },
+  { name: 'Arsitek', riasec: 'RA', desc: 'Merancang bangunan & ruang', skills: ['Seni Budaya','Matematika','Kreativitas'], match: 0 },
+  { name: 'Penulis', riasec: 'AI', desc: 'Menulis buku, artikel, konten', skills: ['Bahasa Indonesia','Kreativitas','Observasi'], match: 0 },
+  { name: 'Psikolog', riasec: 'SA', desc: 'Memahami & membantu perilaku manusia', skills: ['Empati','Observasi','Komunikasi'], match: 0 },
+  { name: 'Dokter Hewan', riasec: 'IR', desc: 'Merawat kesehatan hewan', skills: ['Biologi','IPA','Empati'], match: 0 },
+  { name: 'Wirausahawan', riasec: 'EA', desc: 'Membangun & mengelola bisnis', skills: ['Kepemimpinan','Kreativitas','Matematika'], match: 0 },
+  { name: 'Perawat', riasec: 'SR', desc: 'Merawat pasien di fasilitas kesehatan', skills: ['Biologi','Empati','Ketahanan Fisik'], match: 0 },
+  { name: 'Desainer Grafis', riasec: 'AE', desc: 'Membuat desain visual', skills: ['Seni Budaya','Informatika','Kreativitas'], match: 0 },
+  { name: 'Polisi/TNI', riasec: 'RE', desc: 'Menjaga keamanan & pertahanan', skills: ['PJOK','PPKN','Kepemimpinan'], match: 0 },
+  { name: 'Jurnalis', riasec: 'IA', desc: 'Meliput & menulis berita', skills: ['Bahasa Indonesia','Komunikasi','Observasi'], match: 0 },
+  { name: 'Apoteker', riasec: 'CI', desc: 'Menyiapkan & mendistribusikan obat', skills: ['Kimia','Biologi','Detail'], match: 0 },
+  { name: 'Pilot', riasec: 'RC', desc: 'Menerbangkan pesawat', skills: ['Fisika','Matematika','Ketahanan Fisik'], match: 0 },
+  { name: 'Musisi', riasec: 'AI', desc: 'Menciptakan & memainkan musik', skills: ['Seni Budaya','Musik','Kreativitas'], match: 0 },
+  { name: 'Atlet Profesional', riasec: 'RS', desc: 'Olahraga kompetitif', skills: ['PJOK','Disiplin','Ketahanan Fisik'], match: 0 },
+  { name: 'Data Scientist', riasec: 'IC', desc: 'Analisis data & machine learning', skills: ['Matematika','Informatika','Logika'], match: 0 },
+  { name: 'Chef/Koki', riasec: 'RA', desc: 'Memasak & menciptakan menu', skills: ['Seni Budaya','Kreativitas','Detail'], match: 0 },
+  { name: 'Diplomat', riasec: 'ES', desc: 'Hubungan internasional & negosiasi', skills: ['Bahasa Inggris','PPKN','Komunikasi'], match: 0 },
+  { name: 'Astronom', riasec: 'I', desc: 'Mempelajari benda langit', skills: ['IPA','Matematika','Fisika'], match: 0 },
+  { name: 'Fotografer', riasec: 'AE', desc: 'Mengabadikan momen melalui foto', skills: ['Seni Budaya','Informatika','Kreativitas'], match: 0 },
+  { name: 'Bankir', riasec: 'CE', desc: 'Mengelola layanan perbankan', skills: ['Matematika','Komunikasi','Organisasi'], match: 0 },
+  { name: 'Farmasis', riasec: 'IC', desc: 'Riset & pengembangan obat', skills: ['Kimia','Biologi','Riset'], match: 0 }
+];
+
+// Sample students
+const SAMPLE_STUDENTS = [
+  { id: 1, name: 'Ahmad Rizki', nis: '2024001', class: 'X-1', gender: 'L', address: 'Jl. Merdeka No. 10, Jakarta', phone: '081234567890', parentName: 'H. Abdul Rizki', parentPhone: '081234567891', photo: '👨' },
+  { id: 2, name: 'Siti Nurhaliza', nis: '2024002', class: 'X-1', gender: 'P', address: 'Jl. Sudirman No. 25, Jakarta', phone: '081234567892', parentName: 'H. Ahmad Nur', parentPhone: '081234567893', photo: '👩' },
+  { id: 3, name: 'Budi Santoso', nis: '2024003', class: 'X-2', gender: 'L', address: 'Jl. Thamrin No. 5, Jakarta', phone: '081234567894', parentName: 'Santoso Wijaya', parentPhone: '081234567895', photo: '👨' },
+  { id: 4, name: 'Dewi Kartika', nis: '2024004', class: 'X-2', gender: 'P', address: 'Jl. Gatot Subroto No. 12, Jakarta', phone: '081234567896', parentName: 'Kartika Sari', parentPhone: '081234567897', photo: '👩' },
+  { id: 5, name: 'Muhammad Fadil', nis: '2024005', class: 'X-1', gender: 'L', address: 'Jl. Rasuna Said No. 8, Jakarta', phone: '081234567898', parentName: 'Fadil Rahman', parentPhone: '081234567899', photo: '👨' },
+  { id: 6, name: 'Aisyah Putri', nis: '2024006', class: 'XI-1', gender: 'P', address: 'Jl. Kuningan No. 3, Jakarta', phone: '081234567800', parentName: 'Putri Amelia', parentPhone: '081234567801', photo: '👩' },
+  { id: 7, name: 'Rendi Pratama', nis: '2024007', class: 'XI-1', gender: 'L', address: 'Jl. Casablanca No. 7, Jakarta', phone: '081234567802', parentName: 'Pratama Putra', parentPhone: '081234567803', photo: '👨' },
+  { id: 8, name: 'Lestari Wulan', nis: '2024008', class: 'XI-1', gender: 'P', address: 'Jl. Mampang No. 15, Jakarta', phone: '081234567804', parentName: 'Wulan Dewi', parentPhone: '081234567805', photo: '👩' },
+  { id: 9, name: 'Farhan Akbar', nis: '2024009', class: 'X-2', gender: 'L', address: 'Jl. Tebet No. 20, Jakarta', phone: '081234567806', parentName: 'Akbar Syah', parentPhone: '081234567807', photo: '👨' },
+  { id: 10, name: 'Nabila Husna', nis: '2024010', class: 'X-1', gender: 'P', address: 'Jl. Kemang No. 9, Jakarta', phone: '081234567808', parentName: 'Husna Malik', parentPhone: '081234567809', photo: '👩' }
+];
+
+// ===================== INITIALIZATION =====================
+function getDefaultData() {
+  const students = JSON.parse(JSON.stringify(SAMPLE_STUDENTS));
+  // Add academic data
+  students.forEach(s => {
+    s.grades = {};
+    SUBJECTS.forEach(sub => {
+      s.grades[sub] = {
+        tugas: r(60,100), uts: r(55,100), uas: r(50,100),
+        harian: Array.from({length:5}, () => r(50,100))
+      };
+    });
+    s.attendance = { hadir: r(80,100), izin: r(0,5), sakit: r(0,3), alpha: r(0,2) };
+    s.teacherNotes = [
+      { date: '2025-01-15', note: 'Siswa menunjukkan perkembangan baik dalam bidang akademik.' },
+      { date: '2025-02-10', note: 'Perlu peningkatan dalam konsistensi belajar.' }
+    ];
+    // Talent mapping
+    s.hollandCode = {
+      R: r(20,90), I: r(20,90), A: r(20,90),
+      S: r(20,90), E: r(20,90), C: r(20,90)
+    };
+    s.multipleIntelligence = {};
+    MI_TYPES.forEach(t => { s.multipleIntelligence[t] = r(25,95); });
+    s.mbti = ['INTJ','INTP','ENTJ','ENTP','INFJ','INFP','ENFJ','ENFP',
+              'ISTJ','ISFJ','ESTJ','ESFJ','ISTP','ISFP','ESTP','ESFP'][r(0,15)];
+    s.psikotes = { kecerdasan: r(85,140), kepribadian: ['Sanguinis','Melankolis','Koleris','Phlegmatis'][r(0,3)], bakat: ['Leadership','Analytical','Creative','Social','Technical'][r(0,4)] };
+    // IACP
+    s.iacp = {
+      targetJurusan: ['Teknik Informatika','Kedokteran','Ekonomi','Hukum','Teknik Sipil','Psikologi','Akuntansi','Desain Komunikasi Visual'][r(0,7)],
+      targetProfesi: ['Programmer','Dokter','Pengusaha','Pengacara','Insinyur','Psikolog','Akuntan','Desainer'][r(0,7)],
+      targetNilai: {},
+      kompetensi: ['Komunikasi','Leadership','Problem Solving','Digital Literacy','English Proficiency'].slice(0, r(2,5)),
+      timeline: [
+        { date: '2025-07', desc: 'Meningkatkan nilai rata-rata di atas 85' },
+        { date: '2025-12', desc: 'Lulus sertifikasi bahasa Inggris' },
+        { date: '2026-06', desc: 'Persiapan UTBK & seleksi masuk PTN' }
+      ],
+      mentor: 'Pak Ahmad, S.Pd'
+    };
+    SUBJECTS.forEach(sub => { s.iacp.targetNilai[sub] = r(80,95); });
+    // Achievements
+    s.achievements = [
+      { id: 1, type: 'Akademik', title: 'Juara 1 Olimpiade Matematika Tingkat Kabupaten', year: '2024', level: 'Kabupaten' },
+      { id: 2, type: 'Non-Akademik', title: 'Peserta Pramuka Tingkat Nasional', year: '2024', level: 'Nasional' }
+    ];
+    s.certificates = [
+      { id: 1, name: 'Sertifikat TOEFL', issuer: 'ETS', year: '2024' },
+      { id: 2, name: 'Sertifikat Microsoft Office', issuer: 'Microsoft', year: '2023' }
+    ];
+    s.organizations = [
+      { id: 1, name: 'OSIS', role: 'Anggota', period: '2024-2025' },
+      { id: 2, name: 'Rohis', role: 'Sekretaris', period: '2024-2025' }
+    ];
+    s.committees = [
+      { id: 1, name: 'Panitia 17 Agustus', role: 'Koordinator', year: '2024' }
+    ];
+    s.memorization = [
+      { id: 1, surah: 'Al-Mulk', juz: 28, status: 'Selesai', date: '2024-03' },
+      { id: 2, surah: 'Ar-Rahman', juz: 27, status: 'Dalam Proses', date: '2025-01' }
+    ];
+    s.portfolio = [
+      { id: 1, title: 'Proyek Website Sekolah', url: 'https://example.com', type: 'Digital' },
+      { id: 2, title: 'Makalah Penelitian IPA', url: '', type: 'Dokumen' }
+    ];
+    s.counselingNotes = [];
+  });
+  return students;
+}
+
+function r(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
+
+function loadData() {
+  try {
+    const d = localStorage.getItem(STORAGE_KEY);
+    if (d) return JSON.parse(d);
+  } catch(e) {}
+  const data = { students: getDefaultData() };
+  saveData(data);
+  return data;
+}
+
+function saveData(data) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+}
+
+let appData = loadData();
+let currentUser = null;
+let currentPage = 'dashboard';
+let chartInstances = {};
+
+// ===================== AUTH =====================
+const USERS = {
+  siswa: { password: 'siswa123', role: 'Siswa', name: 'Ahmad Rizki', studentId: 1 },
+  guru: { password: 'guru123', role: 'Guru', name: 'Pak Ahmad, S.Pd' },
+  bk: { password: 'bk123', role: 'Guru BK', name: 'Bu Ratna, S.Psi' },
+  pembina: { password: 'pembina123', role: 'Pembina', name: 'Pak Budi, S.Pd' },
+  admin: { password: 'admin123', role: 'Admin', name: 'Dr. H. Suharto, M.Pd' }
+};
+
+function doLogin() {
+  const u = document.getElementById('loginUser').value.trim();
+  const p = document.getElementById('loginPass').value;
+  const user = USERS[u];
+  if (!user || user.password !== p) {
+    showToast('Username atau password salah!', 'error');
+    return;
+  }
+  currentUser = { username: u, ...user };
+  document.getElementById('loginPage').style.display = 'none';
+  document.getElementById('appPage').style.display = 'block';
+  document.getElementById('navName').textContent = currentUser.name;
+  document.getElementById('navRole').textContent = currentUser.role;
+  document.getElementById('navAvatar').textContent = currentUser.name.charAt(0);
+  buildSidebar();
+  navigateTo('dashboard');
+  showToast(`Selamat datang, ${currentUser.name}!`, 'success');
+}
+
+function quickLogin(u, p) {
+  document.getElementById('loginUser').value = u;
+  document.getElementById('loginPass').value = p;
+  doLogin();
+}
+
+function doLogout() {
+  currentUser = null;
+  currentPage = 'dashboard';
+  Object.values(chartInstances).forEach(c => c.destroy());
+  chartInstances = {};
+  document.getElementById('loginPage').style.display = '';
+  document.getElementById('appPage').style.display = 'none';
+  document.getElementById('loginUser').value = '';
+  document.getElementById('loginPass').value = '';
+}
+
+// ===================== SIDEBAR NAVIGATION =====================
+const MENU_CONFIG = {
+  Siswa: [
+    { id: 'dashboard', icon: '📊', label: 'Dashboard' },
+    { id: 'profile', icon: '👤', label: 'Profil Saya' },
+    { id: 'academics', icon: '📚', label: 'Monitoring Akademik' },
+    { id: 'talent', icon: '🧠', label: 'Pemetaan Bakat & Minat' },
+    { id: 'iacp', icon: '🗺️', label: 'Rencana Karir (IACP)' },
+    { id: 'achievements', icon: '🏆', label: 'Prestasi & Portofolio' },
+    { id: 'career', icon: '💼', label: 'Rekomendasi Karir' }
+  ],
+  Guru: [
+    { id: 'dashboard', icon: '📊', label: 'Dashboard' },
+    { id: 'academics', icon: '📚', label: 'Monitoring Akademik' },
+    { id: 'students', icon: '👨‍🎓', label: 'Data Siswa' },
+    { id: 'achievements', icon: '🏆', label: 'Prestasi' }
+  ],
+  'Guru BK': [
+    { id: 'dashboard', icon: '📊', label: 'Dashboard' },
+    { id: 'students', icon: '👨‍🎓', label: 'Data Siswa' },
+    { id: 'talent', icon: '🧠', label: 'Pemetaan Bakat & Minat' },
+    { id: 'iacp', icon: '🗺️', label: 'IACP Tracking' },
+    { id: 'career', icon: '💼', label: 'Rekomendasi Karir' },
+    { id: 'counseling', icon: '💬', label: 'Catatan Konseling' }
+  ],
+  Pembina: [
+    { id: 'dashboard', icon: '📊', label: 'Dashboard' },
+    { id: 'achievements', icon: '🏆', label: 'Prestasi & Kompetisi' },
+    { id: 'students', icon: '👨‍🎓', label: 'Data Siswa' }
+  ],
+  Admin: [
+    { id: 'dashboard', icon: '📊', label: 'Dashboard' },
+    { id: 'students', icon: '👨‍🎓', label: 'Data Siswa' },
+    { id: 'academics', icon: '📚', label: 'Monitoring Akademik' },
+    { id: 'talent', icon: '🧠', label: 'Pemetaan Bakat' },
+    { id: 'iacp', icon: '🗺️', label: 'IACP' },
+    { id: 'achievements', icon: '🏆', label: 'Prestasi' },
+    { id: 'career', icon: '💼', label: 'Rekomendasi Karir' },
+    { id: 'counseling', icon: '💬', label: 'Konseling' }
+  ]
+};
+
+function buildSidebar() {
+  const menu = MENU_CONFIG[currentUser.role] || [];
+  const ul = document.getElementById('sidebarMenu');
+  ul.innerHTML = menu.map(m =>
+    `<li><a href="#" data-page="${m.id}" onclick="navigateTo('${m.id}'); return false;">
+      <span class="icon">${m.icon}</span> ${m.label}
+    </a></li>`
+  ).join('');
+}
+
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+}
+
+function navigateTo(pageId) {
+  currentPage = pageId;
+  // Update sidebar active
+  document.querySelectorAll('.sidebar-menu a').forEach(a => {
+    a.classList.toggle('active', a.dataset.page === pageId);
+  });
+  // Close sidebar on mobile
+  document.getElementById('sidebar').classList.remove('open');
+  // Destroy old charts
+  Object.values(chartInstances).forEach(c => { try { c.destroy(); } catch(e){} });
+  chartInstances = {};
+  // Render page
+  renderPage(pageId);
+}
+
+// ===================== PAGE RENDERER =====================
+function renderPage(pageId) {
+  const mc = document.getElementById('mainContent');
+  const renderers = {
+    dashboard: renderDashboard,
+    profile: renderProfile,
+    academics: renderAcademics,
+    talent: renderTalent,
+    iacp: renderIACP,
+    achievements: renderAchievements,
+    career: renderCareer,
+    students: renderStudents,
+    counseling: renderCounseling
+  };
+  const fn = renderers[pageId];
+  if (fn) {
+    mc.innerHTML = fn();
+    // Initialize charts after DOM update
+    setTimeout(() => initPageCharts(pageId), 50);
+  }
+}
+
+function getMyStudent() {
+  if (currentUser.role === 'Siswa') {
+    return appData.students.find(s => s.id === currentUser.studentId);
+  }
+  return null;
+}
+
+function getAllStudents() { return appData.students; }
+
+// ===================== DASHBOARD =====================
+function renderDashboard() {
+  const role = currentUser.role;
+  if (role === 'Siswa') return renderStudentDashboard();
+  if (role === 'Guru') return renderGuruDashboard();
+  if (role === 'Guru BK') return renderBKDashboard();
+  if (role === 'Pembina') return renderPembinaDashboard();
+  if (role === 'Admin') return renderAdminDashboard();
+  return '<p>Dashboard tidak tersedia.</p>';
+}
+
+function renderStudentDashboard() {
+  const s = getMyStudent();
+  if (!s) return '<p>Data tidak ditemukan.</p>';
+  const avg = getStudentAvg(s);
+  const totalAch = s.achievements.length + s.certificates.length;
+  const topH = getTopHolland(s);
+  const topMI = getTopMI(s);
+  return `
+    <h2 class="page-title">Dashboard Siswa</h2>
+    <p class="page-subtitle">Ringkasan akademik dan pengembangan diri ${s.name}</p>
+    <div class="stats-grid">
+      <div class="stat-card"><div class="stat-icon">📊</div><div class="stat-info"><div class="stat-value">${avg.toFixed(1)}</div><div class="stat-label">Rata-rata Nilai</div></div></div>
+      <div class="stat-card green"><div class="stat-icon">🏆</div><div class="stat-info"><div class="stat-value">${totalAch}</div><div class="stat-label">Total Prestasi</div></div></div>
+      <div class="stat-card amber"><div class="stat-icon">📅</div><div class="stat-info"><div class="stat-value">${s.attendance.hadir}%</div><div class="stat-label">Kehadiran</div></div></div>
+      <div class="stat-card blue"><div class="stat-icon">🧠</div><div class="stat-info"><div class="stat-value">${topH}</div><div class="stat-label">Kode Holland Dominan</div></div></div>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-header"><h3>📈 Grafik Nilai Per Mata Pelajaran</h3></div>
+        <div class="chart-container"><canvas id="chartStudentGrades"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><h3>🧠 Multiple Intelligence</h3></div>
+        <div class="chart-container"><canvas id="chartStudentMI"></canvas></div>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-header"><h3>💼 Rekomendasi Karir Teratas</h3></div>
+        <div id="dashboardCareerRecs"></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><h3>🗺️ Progress IACP</h3></div>
+        ${renderIACPProgress(s)}
+      </div>
+    </div>`;
+}
+
+function renderGuruDashboard() {
+  const students = getAllStudents();
+  const classes = [...new Set(students.map(s => s.class))];
+  const avgAll = students.reduce((a, s) => a + getStudentAvg(s), 0) / students.length;
+  const avgAtt = students.reduce((a, s) => a + s.attendance.hadir, 0) / students.length;
+  return `
+    <h2 class="page-title">Dashboard Guru</h2>
+    <p class="page-subtitle">Overview kelas dan monitoring siswa</p>
+    <div class="stats-grid">
+      <div class="stat-card"><div class="stat-icon">👨‍🎓</div><div class="stat-info"><div class="stat-value">${students.length}</div><div class="stat-label">Total Siswa</div></div></div>
+      <div class="stat-card green"><div class="stat-icon">📊</div><div class="stat-info"><div class="stat-value">${avgAll.toFixed(1)}</div><div class="stat-label">Rata-rata Nilai Sekolah</div></div></div>
+      <div class="stat-card amber"><div class="stat-icon">📅</div><div class="stat-info"><div class="stat-value">${avgAtt.toFixed(1)}%</div><div class="stat-label">Rata-rata Kehadiran</div></div></div>
+      <div class="stat-card blue"><div class="stat-icon">🏫</div><div class="stat-info"><div class="stat-value">${classes.length}</div><div class="stat-label">Jumlah Kelas</div></div></div>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-header"><h3>📊 Rata-rata Nilai Per Kelas</h3></div>
+        <div class="chart-container"><canvas id="chartClassAvg"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><h3>📅 Kehadiran Per Kelas</h3></div>
+        <div class="chart-container"><canvas id="chartClassAttendance"></canvas></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header"><h3>👨‍🎓 Daftar Siswa</h3></div>
+      <div class="table-container">
+        <table>
+          <thead><tr><th>No</th><th>Nama</th><th>Kelas</th><th>NIS</th><th>Rata-rata</th><th>Kehadiran</th><th>Aksi</th></tr></thead>
+          <tbody>
+            ${students.map((s, i) => `<tr>
+              <td>${i+1}</td><td>${s.name}</td><td>${s.class}</td><td>${s.nis}</td>
+              <td><span class="badge ${getStudentAvg(s)>=80?'badge-green':getStudentAvg(s)>=70?'badge-amber':'badge-red'}">${getStudentAvg(s).toFixed(1)}</span></td>
+              <td>${s.attendance.hadir}%</td>
+              <td><button class="btn btn-sm btn-outline" onclick="viewStudentDetail(${s.id})">Detail</button></td>
+            </tr>`).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>`;
+}
+
+function renderBKDashboard() {
+  const students = getAllStudents();
+  const classes = [...new Set(students.map(s => s.class))];
+  const withIACP = students.filter(s => s.iacp && s.iacp.targetJurusan).length;
+  return `
+    <h2 class="page-title">Dashboard Guru BK</h2>
+    <p class="page-subtitle">Konseling, pemetaan bakat, dan tracking IACP</p>
+    <div class="stats-grid">
+      <div class="stat-card"><div class="stat-icon">👨‍🎓</div><div class="stat-info"><div class="stat-value">${students.length}</div><div class="stat-label">Total Siswa</div></div></div>
+      <div class="stat-card green"><div class="stat-icon">🗺️</div><div class="stat-info"><div class="stat-value">${withIACP}</div><div class="stat-label">Siswa dengan IACP</div></div></div>
+      <div class="stat-card amber"><div class="stat-icon">💬</div><div class="stat-info"><div class="stat-value">${students.reduce((a,s)=>a+s.counselingNotes.length,0)}</div><div class="stat-label">Catatan Konseling</div></div></div>
+      <div class="stat-card blue"><div class="stat-icon">🏫</div><div class="stat-info"><div class="stat-value">${classes.length}</div><div class="stat-label">Jumlah Kelas</div></div></div>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-header"><h3>🧠 Distribusi Kode Holland</h3></div>
+        <div class="chart-container"><canvas id="chartHollandDist"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><h3>📊 Rata-rata MI Per Siswa</h3></div>
+        <div class="chart-container"><canvas id="chartMIOverview"></canvas></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header"><h3>👨‍🎓 Daftar Siswa & Status IACP</h3></div>
+      <div class="table-container">
+        <table>
+          <thead><tr><th>Nama</th><th>Kelas</th><th>Holland Dominan</th><th>MBTI</th><th>Target Jurusan</th><th>Aksi</th></tr></thead>
+          <tbody>
+            ${students.map(s => `<tr>
+              <td>${s.name}</td><td>${s.class}</td>
+              <td><span class="badge badge-blue">${getTopHolland(s)}</span></td>
+              <td><span class="badge badge-amber">${s.mbti}</span></td>
+              <td>${s.iacp.targetJurusan}</td>
+              <td><button class="btn btn-sm btn-outline" onclick="viewStudentDetail(${s.id})">Detail</button></td>
+            </tr>`).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>`;
+}
+
+function renderPembinaDashboard() {
+  const students = getAllStudents();
+  const totalAch = students.reduce((a, s) => a + s.achievements.length, 0);
+  const totalCert = students.reduce((a, s) => a + s.certificates.length, 0);
+  const totalOrg = students.reduce((a, s) => a + s.organizations.length, 0);
+  return `
+    <h2 class="page-title">Dashboard Pembina</h2>
+    <p class="page-subtitle">Tracking prestasi, kompetisi, dan sertifikasi siswa</p>
+    <div class="stats-grid">
+      <div class="stat-card"><div class="stat-icon">🏆</div><div class="stat-info"><div class="stat-value">${totalAch}</div><div class="stat-label">Total Prestasi</div></div></div>
+      <div class="stat-card green"><div class="stat-icon">📜</div><div class="stat-info"><div class="stat-value">${totalCert}</div><div class="stat-label">Total Sertifikat</div></div></div>
+      <div class="stat-card amber"><div class="stat-icon">🏛️</div><div class="stat-info"><div class="stat-value">${totalOrg}</div><div class="stat-label">Organisasi Aktif</div></div></div>
+      <div class="stat-card blue"><div class="stat-icon">👨‍🎓</div><div class="stat-info"><div class="stat-value">${students.length}</div><div class="stat-label">Total Siswa</div></div></div>
+    </div>
+    <div class="card">
+      <div class="card-header"><h3>📊 Prestasi Per Jenjang</h3></div>
+      <div class="chart-container"><canvas id="chartAchievementLevel"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-header"><h3>🏆 Daftar Prestasi Siswa</h3></div>
+      <div class="table-container">
+        <table>
+          <thead><tr><th>Siswa</th><th>Kelas</th><th>Judul Prestasi</th><th>Tingkat</th><th>Tahun</th></tr></thead>
+          <tbody>
+            ${students.flatMap(s => s.achievements.map(a => `<tr>
+              <td>${s.name}</td><td>${s.class}</td><td>${a.title}</td>
+              <td><span class="badge badge-${a.level==='Nasional'?'green':a.level==='Provinsi'?'blue':'amber'}">${a.level}</span></td>
+              <td>${a.year}</td>
+            </tr>`)).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>`;
+}
+
+function renderAdminDashboard() {
+  const students = getAllStudents();
+  const classes = [...new Set(students.map(s => s.class))];
+  const avgAll = students.reduce((a, s) => a + getStudentAvg(s), 0) / students.length;
+  const totalAch = students.reduce((a, s) => a + s.achievements.length, 0);
+  const totalCert = students.reduce((a, s) => a + s.certificates.length, 0);
+  return `
+    <h2 class="page-title">Dashboard Admin / Kepala Sekolah</h2>
+    <p class="page-subtitle">Statistik sekolah secara keseluruhan</p>
+    <div class="stats-grid">
+      <div class="stat-card"><div class="stat-icon">👨‍🎓</div><div class="stat-info"><div class="stat-value">${students.length}</div><div class="stat-label">Total Siswa</div></div></div>
+      <div class="stat-card green"><div class="stat-icon">📊</div><div class="stat-info"><div class="stat-value">${avgAll.toFixed(1)}</div><div class="stat-label">Rata-rata Nilai</div></div></div>
+      <div class="stat-card amber"><div class="stat-icon">🏆</div><div class="stat-info"><div class="stat-value">${totalAch}</div><div class="stat-label">Total Prestasi</div></div></div>
+      <div class="stat-card blue"><div class="stat-icon">🏫</div><div class="stat-info"><div class="stat-value">${classes.length}</div><div class="stat-label">Jumlah Kelas</div></div></div>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-header"><h3>📊 Rata-rata Nilai Per Kelas</h3></div>
+        <div class="chart-container"><canvas id="chartAdminClassAvg"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><h3>📅 Kehadiran Per Kelas</h3></div>
+        <div class="chart-container"><canvas id="chartAdminAttendance"></canvas></div>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-header"><h3>🏆 Distribusi Prestasi</h3></div>
+        <div class="chart-container"><canvas id="chartAdminAchievement"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><h3>🧠 Distribusi Holland Code</h3></div>
+        <div class="chart-container"><canvas id="chartAdminHolland"></canvas></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header"><h3>👨‍🎓 Rekap Siswa</h3>
+        <button class="btn btn-sm btn-primary" onclick="printPage()">🖨️ Cetak Laporan</button>
+      </div>
+      <div class="table-container">
+        <table>
+          <thead><tr><th>No</th><th>Nama</th><th>Kelas</th><th>NIS</th><th>Rata-rata</th><th>Kehadiran</th><th>Prestasi</th><th>Holland</th></tr></thead>
+          <tbody>
+            ${students.map((s, i) => `<tr>
+              <td>${i+1}</td><td>${s.name}</td><td>${s.class}</td><td>${s.nis}</td>
+              <td><span class="badge ${getStudentAvg(s)>=80?'badge-green':getStudentAvg(s)>=70?'badge-amber':'badge-red'}">${getStudentAvg(s).toFixed(1)}</span></td>
+              <td>${s.attendance.hadir}%</td><td>${s.achievements.length}</td>
+              <td><span class="badge badge-blue">${getTopHolland(s)}</span></td>
+            </tr>`).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>`;
+}
+
+// ===================== PROFILE =====================
+function renderProfile() {
+  const s = getMyStudent();
+  if (!s && currentUser.role === 'Siswa') return '<p>Data tidak ditemukan.</p>';
+  // For non-siswa, show student selector
+  if (currentUser.role !== 'Siswa') {
+    return renderStudents();
+  }
+  return `
+    <h2 class="page-title">Profil Siswa</h2>
+    <p class="page-subtitle">Informasi biodata dan data pribadi</p>
+    <div class="card">
+      <div class="profile-header">
+        <div class="profile-avatar">${s.photo}</div>
+        <div class="profile-info">
+          <h2>${s.name}</h2>
+          <p>${s.class} • NIS: ${s.nis}</p>
+        </div>
+        <button class="btn btn-primary btn-sm" onclick="editProfile(${s.id})" style="margin-left:auto;">✏️ Edit Profil</button>
+      </div>
+      <div class="info-grid">
+        <div class="info-item"><label>Nama Lengkap</label><span>${s.name}</span></div>
+        <div class="info-item"><label>NIS</label><span>${s.nis}</span></div>
+        <div class="info-item"><label>Kelas</label><span>${s.class}</span></div>
+        <div class="info-item"><label>Jenis Kelamin</label><span>${s.gender === 'L' ? 'Laki-laki' : 'Perempuan'}</span></div>
+        <div class="info-item"><label>Alamat</label><span>${s.address}</span></div>
+        <div class="info-item"><label>No. Telepon</label><span>${s.phone}</span></div>
+        <div class="info-item"><label>Nama Orang Tua</label><span>${s.parentName}</span></div>
+        <div class="info-item"><label>Telp. Orang Tua</label><span>${s.parentPhone}</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">📝 Kepribadian & Catatan</div>
+      <div class="info-grid">
+        <div class="info-item"><label>Tipe Kepribadian</label><span>${s.psikotes.kepribadian}</span></div>
+        <div class="info-item"><label>Bakat Dominan</label><span>${s.psikotes.bakat}</span></div>
+        <div class="info-item"><label>IQ Score</label><span>${s.psikotes.kecerdasan}</span></div>
+        <div class="info-item"><label>Tipe MBTI</label><span>${s.mbti}</span></div>
+      </div>
+    </div>`;
+}
+
+function editProfile(id) {
+  const s = appData.students.find(st => st.id === id);
+  if (!s) return;
+  openModal('Edit Profil', `
+    <div class="form-group"><label>Nama Lengkap</label><input type="text" id="epName" value="${s.name}"></div>
+    <div class="gap-row">
+      <div class="form-group"><label>Alamat</label><input type="text" id="epAddr" value="${s.address}"></div>
+      <div class="form-group"><label>No. Telepon</label><input type="text" id="epPhone" value="${s.phone}"></div>
+    </div>
+    <div class="gap-row">
+      <div class="form-group"><label>Nama Orang Tua</label><input type="text" id="epParent" value="${s.parentName}"></div>
+      <div class="form-group"><label>Telp. Orang Tua</label><input type="text" id="epParentPhone" value="${s.parentPhone}"></div>
+    </div>
+  `, () => {
+    s.name = document.getElementById('epName').value;
+    s.address = document.getElementById('epAddr').value;
+    s.phone = document.getElementById('epPhone').value;
+    s.parentName = document.getElementById('epParent').value;
+    s.parentPhone = document.getElementById('epParentPhone').value;
+    saveData(appData);
+    closeModal();
+    navigateTo('profile');
+    showToast('Profil berhasil diperbarui!', 'success');
+  });
+}
+
+// ===================== ACADEMICS =====================
+function renderAcademics() {
+  const isSiswa = currentUser.role === 'Siswa';
+  const students = isSiswa ? [getMyStudent()] : getAllStudents();
+  let studentSelector = '';
+  if (!isSiswa) {
+    studentSelector = `
+      <div class="toolbar">
+        <div class="search-box"><input type="text" id="acadSearch" placeholder="Cari siswa..." oninput="filterAcademics()"></div>
+        <select id="acadClassFilter" onchange="filterAcademics()">
+          <option value="">Semua Kelas</option>
+          ${[...new Set(getAllStudents().map(s=>s.class))].map(c=>`<option value="${c}">${c}</option>`).join('')}
+        </select>
+        <select id="acadStudentSelect" onchange="showStudentAcademics()">
+          <option value="">Pilih Siswa</option>
+          ${getAllStudents().map(s=>`<option value="${s.id}">${s.name} (${s.class})</option>`).join('')}
+        </select>
+      </div>`;
+  }
+  return `
+    <h2 class="page-title">Monitoring Akademik</h2>
+    <p class="page-subtitle">Nilai, kehadiran, dan perkembangan akademik</p>
+    ${studentSelector}
+    <div id="acadContent">${isSiswa ? renderStudentAcademics(getMyStudent()) : '<div class="card"><p class="text-center" style="color:var(--text-light);">Pilih siswa untuk melihat data akademik</p></div>'}</div>`;
+}
+
+function showStudentAcademics() {
+  const id = parseInt(document.getElementById('acadStudentSelect').value);
+  const s = appData.students.find(st => st.id === id);
+  document.getElementById('acadContent').innerHTML = s ? renderStudentAcademics(s) : '<div class="card"><p class="text-center" style="color:var(--text-light);">Pilih siswa untuk melihat data akademik</p></div>';
+  if (s) setTimeout(() => initAcademicsCharts(s), 50);
+}
+
+function filterAcademics() {
+  const search = document.getElementById('acadSearch').value.toLowerCase();
+  const cls = document.getElementById('acadClassFilter').value;
+  const sel = document.getElementById('acadStudentSelect');
+  const students = getAllStudents().filter(s => {
+    if (cls && s.class !== cls) return false;
+    if (search && !s.name.toLowerCase().includes(search)) return false;
+    return true;
+  });
+  sel.innerHTML = '<option value="">Pilih Siswa</option>' + students.map(s => `<option value="${s.id}">${s.name} (${s.class})</option>`).join('');
+}
+
+function renderStudentAcademics(s) {
+  if (!s) return '';
+  const avg = getStudentAvg(s);
+  const totalHadir = s.attendance.hadir + s.attendance.izin + s.attendance.sakit + s.attendance.alpha;
+  return `
+    <div class="stats-grid">
+      <div class="stat-card"><div class="stat-icon">📊</div><div class="stat-info"><div class="stat-value">${avg.toFixed(1)}</div><div class="stat-label">Rata-rata Nilai</div></div></div>
+      <div class="stat-card green"><div class="stat-icon">✅</div><div class="stat-info"><div class="stat-value">${s.attendance.hadir}%</div><div class="stat-label">Kehadiran</div></div></div>
+      <div class="stat-card amber"><div class="stat-icon">📝</div><div class="stat-info"><div class="stat-value">${s.teacherNotes.length}</div><div class="stat-label">Catatan Guru</div></div></div>
+    </div>
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab(this,'tabNilai')">Nilai</button>
+      <button class="tab-btn" onclick="switchTab(this,'tabKehadiran')">Kehadiran</button>
+      <button class="tab-btn" onclick="switchTab(this,'tabGrafik')">Grafik Perkembangan</button>
+      <button class="tab-btn" onclick="switchTab(this,'tabCatatan')">Catatan Guru</button>
+    </div>
+    <div class="tab-content active" id="tabNilai">
+      <div class="card">
+        <div class="card-header"><h3>📋 Nilai Mata Pelajaran</h3>
+          ${currentUser.role !== 'Siswa' ? `<button class="btn btn-sm btn-primary" onclick="editGrades(${s.id})">✏️ Edit Nilai</button>` : ''}
+        </div>
+        <div class="table-container">
+          <table>
+            <thead><tr><th>Mata Pelajaran</th><th>Tugas</th><th>UTS</th><th>UAS</th><th>Rata-rata</th></tr></thead>
+            <tbody>
+              ${SUBJECTS.map(sub => {
+                const g = s.grades[sub];
+                const avg = ((g.tugas + g.uts + g.uas) / 3).toFixed(1);
+                return `<tr><td>${sub}</td><td>${g.tugas}</td><td>${g.uts}</td><td>${g.uas}</td>
+                  <td><span class="badge ${avg>=80?'badge-green':avg>=70?'badge-amber':'badge-red'}">${avg}</span></td></tr>`;
+              }).join('')}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="tab-content" id="tabKehadiran">
+      <div class="card">
+        <div class="card-title">📅 Data Kehadiran</div>
+        <div class="info-grid">
+          <div class="info-item"><label>Hadir</label><span style="color:var(--success);font-weight:700;">${s.attendance.hadir}%</span></div>
+          <div class="info-item"><label>Izin</label><span style="color:var(--accent);font-weight:700;">${s.attendance.izin}%</span></div>
+          <div class="info-item"><label>Sakit</label><span style="color:var(--warning);font-weight:700;">${s.attendance.sakit}%</span></div>
+          <div class="info-item"><label>Alpha</label><span style="color:var(--danger);font-weight:700;">${s.attendance.alpha}%</span></div>
+        </div>
+        <div class="chart-container mt-2"><canvas id="chartAttendancePie"></canvas></div>
+      </div>
+    </div>
+    <div class="tab-content" id="tabGrafik">
+      <div class="card">
+        <div class="card-title">📈 Grafik Perkembangan Nilai Harian</div>
+        <div class="chart-container"><canvas id="chartGradeProgress"></canvas></div>
+      </div>
+    </div>
+    <div class="tab-content" id="tabCatatan">
+      <div class="card">
+        <div class="card-header"><h3>📝 Catatan Guru</h3>
+          ${currentUser.role === 'Guru' ? `<button class="btn btn-sm btn-primary" onclick="addTeacherNote(${s.id})">+ Tambah Catatan</button>` : ''}
+        </div>
+        ${s.teacherNotes.map(n => `
+          <div style="padding:12px;background:var(--bg);border-radius:8px;margin-bottom:8px;">
+            <div style="font-size:11px;color:var(--accent);font-weight:600;">${n.date}</div>
+            <div style="font-size:14px;margin-top:4px;">${n.note}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>`;
+}
+
+function switchTab(btn, tabId) {
+  const parent = btn.closest('.tabs').parentElement;
+  parent.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  parent.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(tabId).classList.add('active');
+  // Re-init charts if needed
+  const s = getSelectedStudent();
+  if (s && tabId === 'tabKehadiran') setTimeout(() => initAttendanceChart(s), 50);
+  if (s && tabId === 'tabGrafik') setTimeout(() => initGradeProgressChart(s), 50);
+}
+
+function getSelectedStudent() {
+  const sel = document.getElementById('acadStudentSelect');
+  if (sel && sel.value) return appData.students.find(s => s.id === parseInt(sel.value));
+  return getMyStudent();
+}
+
+function editGrades(id) {
+  const s = appData.students.find(st => st.id === id);
+  if (!s) return;
+  let html = '<div style="max-height:60vh;overflow-y:auto;">';
+  SUBJECTS.forEach(sub => {
+    const g = s.grades[sub];
+    html += `<div style="margin-bottom:16px;padding:12px;background:var(--bg);border-radius:8px;">
+      <strong>${sub}</strong>
+      <div class="gap-row" style="margin-top:8px;">
+        <div class="form-group"><label>Tugas</label><input type="number" id="g_${sub}_tugas" value="${g.tugas}" min="0" max="100"></div>
+        <div class="form-group"><label>UTS</label><input type="number" id="g_${sub}_uts" value="${g.uts}" min="0" max="100"></div>
+        <div class="form-group"><label>UAS</label><input type="number" id="g_${sub}_uas" value="${g.uas}" min="0" max="100"></div>
+      </div>
+    </div>`;
+  });
+  html += '</div>';
+  openModal('Edit Nilai - ' + s.name, html, () => {
+    SUBJECTS.forEach(sub => {
+      s.grades[sub].tugas = parseInt(document.getElementById(`g_${sub}_tugas`).value) || 0;
+      s.grades[sub].uts = parseInt(document.getElementById(`g_${sub}_uts`).value) || 0;
+      s.grades[sub].uas = parseInt(document.getElementById(`g_${sub}_uas`).value) || 0;
+    });
+    saveData(appData);
+    closeModal();
+    navigateTo('academics');
+    showToast('Nilai berhasil diperbarui!', 'success');
+  });
+}
+
+function addTeacherNote(id) {
+  const s = appData.students.find(st => st.id === id);
+  if (!s) return;
+  openModal('Tambah Catatan Guru', `
+    <div class="form-group"><label>Catatan</label><textarea id="newNote" placeholder="Tulis catatan tentang siswa..."></textarea></div>
+  `, () => {
+    const note = document.getElementById('newNote').value.trim();
+    if (!note) { showToast('Catatan tidak boleh kosong!', 'error'); return; }
+    s.teacherNotes.unshift({ date: new Date().toISOString().split('T')[0], note });
+    saveData(appData);
+    closeModal();
+    navigateTo('academics');
+    showToast('Catatan berhasil ditambahkan!', 'success');
+  });
+}
+
+// ===================== TALENT & INTEREST MAPPING =====================
+function renderTalent() {
+  const isSiswa = currentUser.role === 'Siswa';
+  let selector = '';
+  if (!isSiswa) {
+    selector = `<div class="toolbar">
+      <select id="talentStudentSelect" onchange="showStudentTalent()">
+        <option value="">Pilih Siswa</option>
+        ${getAllStudents().map(s => `<option value="${s.id}">${s.name} (${s.class})</option>`).join('')}
+      </select>
+    </div>`;
+  }
+  return `
+    <h2 class="page-title">Pemetaan Bakat & Minat</h2>
+    <p class="page-subtitle">Hasil psikotes, Holland Code, Multiple Intelligence, dan MBTI</p>
+    ${selector}
+    <div id="talentContent">${isSiswa ? renderStudentTalent(getMyStudent()) : '<div class="card"><p class="text-center" style="color:var(--text-light);">Pilih siswa untuk melihat pemetaan bakat</p></div>'}</div>`;
+}
+
+function showStudentTalent() {
+  const id = parseInt(document.getElementById('talentStudentSelect').value);
+  const s = appData.students.find(st => st.id === id);
+  document.getElementById('talentContent').innerHTML = s ? renderStudentTalent(s) : '<div class="card"><p class="text-center" style="color:var(--text-light);">Pilih siswa</p></div>';
+  if (s) setTimeout(() => initTalentCharts(s), 50);
+}
+
+function renderStudentTalent(s) {
+  if (!s) return '';
+  return `
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-header"><h3>🔬 Hasil Psikotes</h3>
+          ${currentUser.role !== 'Siswa' ? `<button class="btn btn-sm btn-primary" onclick="editPsikotes(${s.id})">✏️ Edit</button>` : ''}
+        </div>
+        <div class="info-grid">
+          <div class="info-item"><label>IQ Score</label><span>${s.psikotes.kecerdasan}</span></div>
+          <div class="info-item"><label>Tipe Kepribadian</label><span>${s.psikotes.kepribadian}</span></div>
+          <div class="info-item"><label>Bakat Dominan</label><span>${s.psikotes.bakat}</span></div>
+          <div class="info-item"><label>MBTI</label><span>${s.mbti}</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><h3>🎯 Kode Holland (RIASEC)</h3>
+          ${currentUser.role !== 'Siswa' ? `<button class="btn btn-sm btn-primary" onclick="editHolland(${s.id})">✏️ Edit</button>` : ''}
+        </div>
+        ${Object.entries(RIASEC).map(([k, v]) => `
+          <div class="holland-bar-container">
+            <div class="holland-bar-label">
+              <span>${v.icon} ${k} - ${v.name}</span>
+              <span style="font-weight:700;">${s.hollandCode[k]}%</span>
+            </div>
+            <div class="holland-bar"><div class="holland-bar-fill" style="width:${s.hollandCode[k]}%"></div></div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-header"><h3>🧠 Multiple Intelligence</h3>
+          ${currentUser.role !== 'Siswa' ? `<button class="btn btn-sm btn-primary" onclick="editMI(${s.id})">✏️ Edit</button>` : ''}
+        </div>
+        <div class="chart-container"><canvas id="chartMI"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><h3>📊 Grafik Holland Code</h3></div>
+        <div class="chart-container"><canvas id="chartHolland"></canvas></div>
+      </div>
+    </div>`;
+}
+
+function editPsikotes(id) {
+  const s = appData.students.find(st => st.id === id);
+  if (!s) return;
+  openModal('Edit Psikotes - ' + s.name, `
+    <div class="form-group"><label>IQ Score</label><input type="number" id="epIQ" value="${s.psikotes.kecerdasan}" min="50" max="200"></div>
+    <div class="form-group"><label>Kepribadian</label>
+      <select id="epKep"><option ${s.psikotes.kepribadian==='Sanguinis'?'selected':''}>Sanguinis</option><option ${s.psikotes.kepribadian==='Melankolis'?'selected':''}>Melankolis</option><option ${s.psikotes.kepribadian==='Koleris'?'selected':''}>Koleris</option><option ${s.psikotes.kepribadian==='Phlegmatis'?'selected':''}>Phlegmatis</option></select>
+    </div>
+    <div class="form-group"><label>Bakat</label>
+      <select id="epBakat"><option ${s.psikotes.bakat==='Leadership'?'selected':''}>Leadership</option><option ${s.psikotes.bakat==='Analytical'?'selected':''}>Analytical</option><option ${s.psikotes.bakat==='Creative'?'selected':''}>Creative</option><option ${s.psikotes.bakat==='Social'?'selected':''}>Social</option><option ${s.psikotes.bakat==='Technical'?'selected':''}>Technical</option></select>
+    </div>
+    <div class="form-group"><label>MBTI</label>
+      <select id="epMBTI">${['INTJ','INTP','ENTJ','ENTP','INFJ','INFP','ENFJ','ENFP','ISTJ','ISFJ','ESTJ','ESFJ','ISTP','ISFP','ESTP','ESFP'].map(t=>`<option ${s.mbti===t?'selected':''}>${t}</option>`).join('')}</select>
+    </div>
+  `, () => {
+    s.psikotes.kecerdasan = parseInt(document.getElementById('epIQ').value);
+    s.psikotes.kepribadian = document.getElementById('epKep').value;
+    s.psikotes.bakat = document.getElementById('epBakat').value;
+    s.mbti = document.getElementById('epMBTI').value;
+    saveData(appData);
+    closeModal();
+    navigateTo('talent');
+    showToast('Data psikotes berhasil diperbarui!', 'success');
+  });
+}
+
+function editHolland(id) {
+  const s = appData.students.find(st => st.id === id);
+  if (!s) return;
+  let html = '';
+  Object.entries(RIASEC).forEach(([k, v]) => {
+    html += `<div class="form-group"><label>${v.icon} ${k} - ${v.name} (%)</label><input type="number" id="eh_${k}" value="${s.hollandCode[k]}" min="0" max="100"></div>`;
+  });
+  openModal('Edit Holland Code - ' + s.name, html, () => {
+    Object.keys(RIASEC).forEach(k => { s.hollandCode[k] = parseInt(document.getElementById(`eh_${k}`).value) || 0; });
+    saveData(appData);
+    closeModal();
+    navigateTo('talent');
+    showToast('Holland Code berhasil diperbarui!', 'success');
+  });
+}
+
+function editMI(id) {
+  const s = appData.students.find(st => st.id === id);
+  if (!s) return;
+  let html = '';
+  MI_TYPES.forEach(t => {
+    html += `<div class="form-group"><label>${t} (%)</label><input type="number" id="emi_${t.replace(/[\s-]/g,'_')}" value="${s.multipleIntelligence[t]}" min="0" max="100"></div>`;
+  });
+  openModal('Edit Multiple Intelligence - ' + s.name, html, () => {
+    MI_TYPES.forEach(t => { s.multipleIntelligence[t] = parseInt(document.getElementById(`emi_${t.replace(/[\s-]/g,'_')}`).value) || 0; });
+    saveData(appData);
+    closeModal();
+    navigateTo('talent');
+    showToast('Multiple Intelligence berhasil diperbarui!', 'success');
+  });
+}
+
+// ===================== IACP =====================
+function renderIACP() {
+  const isSiswa = currentUser.role === 'Siswa';
+  let selector = '';
+  if (!isSiswa) {
+    selector = `<div class="toolbar">
+      <select id="iacpStudentSelect" onchange="showStudentIACP()">
+        <option value="">Pilih Siswa</option>
+        ${getAllStudents().map(s => `<option value="${s.id}">${s.name} (${s.class})</option>`).join('')}
+      </select>
+    </div>`;
+  }
+  return `
+    <h2 class="page-title">Individual Academic & Career Plan (IACP)</h2>
+    <p class="page-subtitle">Rencana akademik dan karir individual siswa</p>
+    ${selector}
+    <div id="iacpContent">${isSiswa ? renderStudentIACP(getMyStudent()) : '<div class="card"><p class="text-center" style="color:var(--text-light);">Pilih siswa untuk melihat IACP</p></div>'}</div>`;
+}
+
+function showStudentIACP() {
+  const id = parseInt(document.getElementById('iacpStudentSelect').value);
+  const s = appData.students.find(st => st.id === id);
+  document.getElementById('iacpContent').innerHTML = s ? renderStudentIACP(s) : '';
+  if (s) setTimeout(() => initIACPCharts(s), 50);
+}
+
+function renderStudentIACP(s) {
+  if (!s) return '';
+  const i = s.iacp;
+  return `
+    <div class="stats-grid">
+      <div class="stat-card"><div class="stat-icon">🎓</div><div class="stat-info"><div class="stat-value" style="font-size:16px;">${i.targetJurusan}</div><div class="stat-label">Target Jurusan</div></div></div>
+      <div class="stat-card green"><div class="stat-icon">💼</div><div class="stat-info"><div class="stat-value" style="font-size:16px;">${i.targetProfesi}</div><div class="stat-label">Target Profesi</div></div></div>
+      <div class="stat-card amber"><div class="stat-icon">👨‍🏫</div><div class="stat-info"><div class="stat-value" style="font-size:16px;">${i.mentor}</div><div class="stat-label">Mentor</div></div></div>
+    </div>
+    ${currentUser.role !== 'Siswa' ? `<div style="text-align:right;margin-bottom:16px;"><button class="btn btn-primary btn-sm" onclick="editIACP(${s.id})">✏️ Edit IACP</button></div>` : ''}
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">🎯 Target Nilai per Mata Pelajaran</div>
+        <div class="chart-container"><canvas id="chartIACPTarget"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-title">📋 Kompetensi yang Harus Dikuasai</div>
+        ${i.kompetensi.map(k => `<div style="padding:10px;background:var(--bg);border-radius:8px;margin-bottom:8px;display:flex;align-items:center;gap:10px;">
+          <span style="color:var(--success);font-size:18px;">✅</span><span>${k}</span>
+        </div>`).join('')}
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">📅 Timeline Pencapaian</div>
+      <div class="timeline">
+        ${i.timeline.map(t => `<div class="timeline-item">
+          <div class="date">${t.date}</div>
+          <h4>${t.desc}</h4>
+        </div>`).join('')}
+      </div>
+    </div>`;
+}
+
+function editIACP(id) {
+  const s = appData.students.find(st => st.id === id);
+  if (!s) return;
+  const i = s.iacp;
+  openModal('Edit IACP - ' + s.name, `
+    <div class="form-group"><label>Target Jurusan</label><input type="text" id="eiJurusan" value="${i.targetJurusan}"></div>
+    <div class="form-group"><label>Target Profesi</label><input type="text" id="eiProfesi" value="${i.targetProfesi}"></div>
+    <div class="form-group"><label>Mentor</label><input type="text" id="eiMentor" value="${i.mentor}"></div>
+    <div class="form-group"><label>Kompetensi (pisahkan dengan koma)</label><input type="text" id="eiKompetensi" value="${i.kompetensi.join(', ')}"></div>
+    <div class="form-group"><label>Target Nilai - Matematika</label><input type="number" id="eiT_Matematika" value="${i.targetNilai.Matematika}"></div>
+    <div class="form-group"><label>Target Nilai - Bahasa Indonesia</label><input type="number" id="eiT_BIndo" value="${i.targetNilai['Bahasa Indonesia']}"></div>
+    <div class="form-group"><label>Target Nilai - Bahasa Inggris</label><input type="number" id="eiT_BIng" value="${i.targetNilai['Bahasa Inggris']}"></div>
+  `, () => {
+    i.targetJurusan = document.getElementById('eiJurusan').value;
+    i.targetProfesi = document.getElementById('eiProfesi').value;
+    i.mentor = document.getElementById('eiMentor').value;
+    i.kompetensi = document.getElementById('eiKompetensi').value.split(',').map(x=>x.trim()).filter(Boolean);
+    i.targetNilai.Matematika = parseInt(document.getElementById('eiT_Matematika').value) || 80;
+    i.targetNilai['Bahasa Indonesia'] = parseInt(document.getElementById('eiT_BIndo').value) || 80;
+    i.targetNilai['Bahasa Inggris'] = parseInt(document.getElementById('eiT_BIng').value) || 80;
+    saveData(appData);
+    closeModal();
+    navigateTo('iacp');
+    showToast('IACP berhasil diperbarui!', 'success');
+  });
+}
+
+// ===================== ACHIEVEMENTS =====================
+function renderAchievements() {
+  const isSiswa = currentUser.role === 'Siswa';
+  let selector = '';
+  if (!isSiswa) {
+    selector = `<div class="toolbar">
+      <select id="achStudentSelect" onchange="showStudentAchievements()">
+        <option value="">Pilih Siswa</option>
+        ${getAllStudents().map(s => `<option value="${s.id}">${s.name} (${s.class})</option>`).join('')}
+      </select>
+    </div>`;
+  }
+  return `
+    <h2 class="page-title">Prestasi & Portofolio</h2>
+    <p class="page-subtitle">Pencapaian akademik, non-akademik, sertifikat, dan portofolio</p>
+    ${selector}
+    <div id="achContent">${isSiswa ? renderStudentAchievements(getMyStudent()) : '<div class="card"><p class="text-center" style="color:var(--text-light);">Pilih siswa untuk melihat prestasi</p></div>'}</div>`;
+}
+
+function showStudentAchievements() {
+  const id = parseInt(document.getElementById('achStudentSelect').value);
+  const s = appData.students.find(st => st.id === id);
+  document.getElementById('achContent').innerHTML = s ? renderStudentAchievements(s) : '';
+}
+
+function renderStudentAchievements(s) {
+  if (!s) return '';
+  return `
+    <div class="stats-grid">
+      <div class="stat-card"><div class="stat-icon">🏆</div><div class="stat-info"><div class="stat-value">${s.achievements.length}</div><div class="stat-label">Prestasi</div></div></div>
+      <div class="stat-card green"><div class="stat-icon">📜</div><div class="stat-info"><div class="stat-value">${s.certificates.length}</div><div class="stat-label">Sertifikat</div></div></div>
+      <div class="stat-card amber"><div class="stat-icon">🏛️</div><div class="stat-info"><div class="stat-value">${s.organizations.length}</div><div class="stat-label">Organisasi</div></div></div>
+    </div>
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab(this,'tabPrestasi')">🏆 Prestasi</button>
+      <button class="tab-btn" onclick="switchTab(this,'tabSertifikat')">📜 Sertifikat</button>
+      <button class="tab-btn" onclick="switchTab(this,'tabOrganisasi')">🏛️ Organisasi</button>
+      <button class="tab-btn" onclick="switchTab(this,'tabKepanitiaan')">🎪 Kepanitiaan</button>
+      <button class="tab-btn" onclick="switchTab(this,'tabHafalan')">📖 Hafalan</button>
+      <button class="tab-btn" onclick="switchTab(this,'tabPortofolio')">💼 Portofolio</button>
+    </div>
+    <div class="tab-content active" id="tabPrestasi">
+      <div class="card">
+        <div class="card-header"><h3>🏆 Prestasi</h3>
+          <button class="btn btn-sm btn-primary" onclick="addAchievement(${s.id})">+ Tambah</button>
+        </div>
+        <div class="table-container">
+          <table><thead><tr><th>No</th><th>Jenis</th><th>Judul</th><th>Tingkat</th><th>Tahun</th><th>Aksi</th></tr></thead>
+          <tbody>${s.achievements.map((a, i) => `<tr><td>${i+1}</td><td><span class="badge badge-blue">${a.type}</span></td><td>${a.title}</td><td><span class="badge badge-green">${a.level}</span></td><td>${a.year}</td><td><button class="btn btn-sm btn-danger" onclick="deleteAchievement(${s.id},${a.id})">🗑️</button></td></tr>`).join('')}</tbody></table>
+        </div>
+      </div>
+    </div>
+    <div class="tab-content" id="tabSertifikat">
+      <div class="card">
+        <div class="card-header"><h3>📜 Sertifikat</h3>
+          <button class="btn btn-sm btn-primary" onclick="addCertificate(${s.id})">+ Tambah</button>
+        </div>
+        <div class="table-container">
+          <table><thead><tr><th>No</th><th>Nama Sertifikat</th><th>Instansi</th><th>Tahun</th><th>Aksi</th></tr></thead>
+          <tbody>${s.certificates.map((c, i) => `<tr><td>${i+1}</td><td>${c.name}</td><td>${c.issuer}</td><td>${c.year}</td><td><button class="btn btn-sm btn-danger" onclick="deleteCertificate(${s.id},${c.id})">🗑️</button></td></tr>`).join('')}</tbody></table>
+        </div>
+      </div>
+    </div>
+    <div class="tab-content" id="tabOrganisasi">
+      <div class="card">
+        <div class="card-header"><h3>🏛️ Organisasi</h3>
+          <button class="btn btn-sm btn-primary" onclick="addOrganization(${s.id})">+ Tambah</button>
+        </div>
+        <div class="table-container">
+          <table><thead><tr><th>No</th><th>Nama</th><th>Jabatan</th><th>Periode</th><th>Aksi</th></tr></thead>
+          <tbody>${s.organizations.map((o, i) => `<tr><td>${i+1}</td><td>${o.name}</td><td>${o.role}</td><td>${o.period}</td><td><button class="btn btn-sm btn-danger" onclick="deleteOrganization(${s.id},${o.id})">🗑️</button></td></tr>`).join('')}</tbody></table>
+        </div>
+      </div>
+    </div>
+    <div class="tab-content" id="tabKepanitiaan">
+      <div class="card">
+        <div class="card-header"><h3>🎪 Kepanitiaan</h3>
+          <button class="btn btn-sm btn-primary" onclick="addCommittee(${s.id})">+ Tambah</button>
+        </div>
+        <div class="table-container">
+          <table><thead><tr><th>No</th><th>Kegiatan</th><th>Jabatan</th><th>Tahun</th><th>Aksi</th></tr></thead>
+          <tbody>${s.committees.map((c, i) => `<tr><td>${i+1}</td><td>${c.name}</td><td>${c.role}</td><td>${c.year}</td><td><button class="btn btn-sm btn-danger" onclick="deleteCommittee(${s.id},${c.id})">🗑️</button></td></tr>`).join('')}</tbody></table>
+        </div>
+      </div>
+    </div>
+    <div class="tab-content" id="tabHafalan">
+      <div class="card">
+        <div class="card-header"><h3>📖 Hafalan Al-Quran</h3>
+          <button class="btn btn-sm btn-primary" onclick="addMemorization(${s.id})">+ Tambah</button>
+        </div>
+        <div class="table-container">
+          <table><thead><tr><th>No</th><th>Surah</th><th>Juz</th><th>Status</th><th>Tanggal</th><th>Aksi</th></tr></thead>
+          <tbody>${s.memorization.map((m, i) => `<tr><td>${i+1}</td><td>${m.surah}</td><td>${m.juz}</td><td><span class="badge ${m.status==='Selesai'?'badge-green':'badge-amber'}">${m.status}</span></td><td>${m.date}</td><td><button class="btn btn-sm btn-danger" onclick="deleteMemorization(${s.id},${m.id})">🗑️</button></td></tr>`).join('')}</tbody></table>
+        </div>
+      </div>
+    </div>
+    <div class="tab-content" id="tabPortofolio">
+      <div class="card">
+        <div class="card-header"><h3>💼 Portofolio</h3>
+          <button class="btn btn-sm btn-primary" onclick="addPortfolio(${s.id})">+ Tambah</button>
+        </div>
+        ${s.portfolio.map(p => `
+          <div class="career-card">
+            <div class="match-circle match-high" style="font-size:24px;">${p.type==='Digital'?'🌐':'📄'}</div>
+            <div class="career-info">
+              <h4>${p.title}</h4>
+              <p>${p.type}${p.url ? ` • <a href="${p.url}" target="_blank">${p.url}</a>` : ''}</p>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    </div>`;
+}
+
+// CRUD for achievements
+function addAchievement(sid) {
+  openModal('Tambah Prestasi', `
+    <div class="form-group"><label>Jenis</label><select id="aaType"><option>Akademik</option><option>Non-Akademik</option></select></div>
+    <div class="form-group"><label>Judul</label><input type="text" id="aaTitle" placeholder="Judul prestasi"></div>
+    <div class="gap-row">
+      <div class="form-group"><label>Tingkat</label><select id="aaLevel"><option>Sekolah</option><option>Kecamatan</option><option>Kabupaten</option><option>Provinsi</option><option>Nasional</option><option>Internasional</option></select></div>
+      <div class="form-group"><label>Tahun</label><input type="text" id="aaYear" value="2025"></div>
+    </div>
+  `, () => {
+    const s = appData.students.find(st => st.id === sid);
+    const maxId = s.achievements.reduce((a, x) => Math.max(a, x.id), 0);
+    s.achievements.push({ id: maxId + 1, type: document.getElementById('aaType').value, title: document.getElementById('aaTitle').value, level: document.getElementById('aaLevel').value, year: document.getElementById('aaYear').value });
+    saveData(appData); closeModal(); showStudentAchievements(); showToast('Prestasi ditambahkan!', 'success');
+  });
+}
+
+function deleteAchievement(sid, aid) {
+  const s = appData.students.find(st => st.id === sid);
+  s.achievements = s.achievements.filter(a => a.id !== aid);
+  saveData(appData); showStudentAchievements(); showToast('Prestasi dihapus.', 'info');
+}
+
+function addCertificate(sid) {
+  openModal('Tambah Sertifikat', `
+    <div class="form-group"><label>Nama Sertifikat</label><input type="text" id="acName"></div>
+    <div class="gap-row">
+      <div class="form-group"><label>Instansi Penerbit</label><input type="text" id="acIssuer"></div>
+      <div class="form-group"><label>Tahun</label><input type="text" id="acYear" value="2025"></div>
+    </div>
+  `, () => {
+    const s = appData.students.find(st => st.id === sid);
+    const maxId = s.certificates.reduce((a, x) => Math.max(a, x.id), 0);
+    s.certificates.push({ id: maxId + 1, name: document.getElementById('acName').value, issuer: document.getElementById('acIssuer').value, year: document.getElementById('acYear').value });
+    saveData(appData); closeModal(); showStudentAchievements(); showToast('Sertifikat ditambahkan!', 'success');
+  });
+}
+
+function deleteCertificate(sid, cid) {
+  const s = appData.students.find(st => st.id === sid);
+  s.certificates = s.certificates.filter(c => c.id !== cid);
+  saveData(appData); showStudentAchievements(); showToast('Sertifikat dihapus.', 'info');
+}
+
+function addOrganization(sid) {
+  openModal('Tambah Organisasi', `
+    <div class="form-group"><label>Nama Organisasi</label><input type="text" id="aoName"></div>
+    <div class="gap-row">
+      <div class="form-group"><label>Jabatan</label><input type="text" id="aoRole"></div>
+      <div class="form-group"><label>Periode</label><input type="text" id="aoPeriod" value="2024-2025"></div>
+    </div>
+  `, () => {
+    const s = appData.students.find(st => st.id === sid);
+    const maxId = s.organizations.reduce((a, x) => Math.max(a, x.id), 0);
+    s.organizations.push({ id: maxId + 1, name: document.getElementById('aoName').value, role: document.getElementById('aoRole').value, period: document.getElementById('aoPeriod').value });
+    saveData(appData); closeModal(); showStudentAchievements(); showToast('Organisasi ditambahkan!', 'success');
+  });
+}
+
+function deleteOrganization(sid, oid) {
+  const s = appData.students.find(st => st.id === sid);
+  s.organizations = s.organizations.filter(o => o.id !== oid);
+  saveData(appData); showStudentAchievements(); showToast('Organisasi dihapus.', 'info');
+}
+
+function addCommittee(sid) {
+  openModal('Tambah Kepanitiaan', `
+    <div class="form-group"><label>Nama Kegiatan</label><input type="text" id="akName"></div>
+    <div class="gap-row">
+      <div class="form-group"><label>Jabatan</label><input type="text" id="akRole"></div>
+      <div class="form-group"><label>Tahun</label><input type="text" id="akYear" value="2025"></div>
+    </div>
+  `, () => {
+    const s = appData.students.find(st => st.id === sid);
+    const maxId = s.committees.reduce((a, x) => Math.max(a, x.id), 0);
+    s.committees.push({ id: maxId + 1, name: document.getElementById('akName').value, role: document.getElementById('akRole').value, year: document.getElementById('akYear').value });
+    saveData(appData); closeModal(); showStudentAchievements(); showToast('Kepanitiaan ditambahkan!', 'success');
+  });
+}
+
+function deleteCommittee(sid, cid) {
+  const s = appData.students.find(st => st.id === sid);
+  s.committees = s.committees.filter(c => c.id !== cid);
+  saveData(appData); showStudentAchievements(); showToast('Kepanitiaan dihapus.', 'info');
+}
+
+function addMemorization(sid) {
+  openModal('Tambah Hafalan', `
+    <div class="gap-row">
+      <div class="form-group"><label>Surah</label><input type="text" id="amSurah"></div>
+      <div class="form-group"><label>Juz</label><input type="number" id="amJuz" min="1" max="30"></div>
+    </div>
+    <div class="gap-row">
+      <div class="form-group"><label>Status</label><select id="amStatus"><option>Selesai</option><option>Dalam Proses</option></select></div>
+      <div class="form-group"><label>Tanggal</label><input type="month" id="amDate" value="2025-01"></div>
+    </div>
+  `, () => {
+    const s = appData.students.find(st => st.id === sid);
+    const maxId = s.memorization.reduce((a, x) => Math.max(a, x.id), 0);
+    s.memorization.push({ id: maxId + 1, surah: document.getElementById('amSurah').value, juz: parseInt(document.getElementById('amJuz').value), status: document.getElementById('amStatus').value, date: document.getElementById('amDate').value });
+    saveData(appData); closeModal(); showStudentAchievements(); showToast('Hafalan ditambahkan!', 'success');
+  });
+}
+
+function deleteMemorization(sid, mid) {
+  const s = appData.students.find(st => st.id === sid);
+  s.memorization = s.memorization.filter(m => m.id !== mid);
+  saveData(appData); showStudentAchievements(); showToast('Hafalan dihapus.', 'info');
+}
+
+function addPortfolio(sid) {
+  openModal('Tambah Portofolio', `
+    <div class="form-group"><label>Judul</label><input type="text" id="apTitle"></div>
+    <div class="gap-row">
+      <div class="form-group"><label>Tipe</label><select id="apType"><option>Digital</option><option>Dokumen</option><option>Fisik</option></select></div>
+      <div class="form-group"><label>URL (opsional)</label><input type="text" id="apUrl"></div>
+    </div>
+  `, () => {
+    const s = appData.students.find(st => st.id === sid);
+    const maxId = s.portfolio.reduce((a, x) => Math.max(a, x.id), 0);
+    s.portfolio.push({ id: maxId + 1, title: document.getElementById('apTitle').value, type: document.getElementById('apType').value, url: document.getElementById('apUrl').value });
+    saveData(appData); closeModal(); showStudentAchievements(); showToast('Portofolio ditambahkan!', 'success');
+  });
+}
+
+// ===================== CAREER RECOMMENDATION =====================
+function renderCareer() {
+  const isSiswa = currentUser.role === 'Siswa';
+  let selector = '';
+  if (!isSiswa) {
+    selector = `<div class="toolbar">
+      <select id="careerStudentSelect" onchange="showStudentCareer()">
+        <option value="">Pilih Siswa</option>
+        ${getAllStudents().map(s => `<option value="${s.id}">${s.name} (${s.class})</option>`).join('')}
+      </select>
+    </div>`;
+  }
+  return `
+    <h2 class="page-title">Rekomendasi Karir</h2>
+    <p class="page-subtitle">Analisis kesesuaian potensi, minat, dan rekomendasi karir</p>
+    ${selector}
+    <div id="careerContent">${isSiswa ? renderStudentCareer(getMyStudent()) : '<div class="card"><p class="text-center" style="color:var(--text-light);">Pilih siswa untuk melihat rekomendasi karir</p></div>'}</div>`;
+}
+
+function showStudentCareer() {
+  const id = parseInt(document.getElementById('careerStudentSelect').value);
+  const s = appData.students.find(st => st.id === id);
+  document.getElementById('careerContent').innerHTML = s ? renderStudentCareer(s) : '';
+  if (s) setTimeout(() => initCareerCharts(s), 50);
+}
+
+function calculateCareerMatch(s) {
+  const topHolland = Object.entries(s.hollandCode).sort((a, b) => b[1] - a[1]).slice(0, 3).map(x => x[0]);
+  const avgGrade = getStudentAvg(s);
+  return CAREERS.map(c => {
+    let match = 0;
+    // Holland match (60% weight)
+    const hLetters = c.riasec.split('');
+    const hMatch = hLetters.filter(l => topHolland.includes(l)).length / hLetters.length;
+    match += hMatch * 60;
+    // Academic performance (20% weight)
+    match += (avgGrade / 100) * 20;
+    // MI bonus (20% weight)
+    const miValues = Object.values(s.multipleIntelligence);
+    const miAvg = miValues.reduce((a, b) => a + b, 0) / miValues.length;
+    match += (miAvg / 100) * 20;
+    return { ...c, match: Math.min(Math.round(match), 99) };
+  }).sort((a, b) => b.match - a.match);
+}
+
+function renderStudentCareer(s) {
+  if (!s) return '';
+  const careers = calculateCareerMatch(s);
+  const top3 = careers.slice(0, 3);
+  const topHolland = Object.entries(s.hollandCode).sort((a, b) => b[1] - a[1])[0];
+  const topMI = Object.entries(s.multipleIntelligence).sort((a, b) => b[1] - a[1])[0];
+  return `
+    <div class="stats-grid">
+      <div class="stat-card"><div class="stat-icon">🎯</div><div class="stat-info"><div class="stat-value">${RIASEC[topHolland[0]].name}</div><div class="stat-label">Minat Dominan (Holland)</div></div></div>
+      <div class="stat-card green"><div class="stat-icon">🧠</div><div class="stat-info"><div class="stat-value">${topMI[0]}</div><div class="stat-label">Kecerdasan Dominan</div></div></div>
+      <div class="stat-card amber"><div class="stat-icon">📊</div><div class="stat-info"><div class="stat-value">${getStudentAvg(s).toFixed(1)}</div><div class="stat-label">Rata-rata Akademik</div></div></div>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">🏆 Top 3 Rekomendasi Profesi</div>
+        ${top3.map(c => `
+          <div class="career-card">
+            <div class="match-circle ${c.match >= 70 ? 'match-high' : c.match >= 50 ? 'match-mid' : 'match-low'}">${c.match}%</div>
+            <div class="career-info">
+              <h4>${c.name}</h4>
+              <p>${c.desc}</p>
+              <p style="margin-top:4px;"><span class="badge badge-blue">RIASEC: ${c.riasec}</span> <span class="badge badge-green">Skills: ${c.skills.join(', ')}</span></p>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+      <div class="card">
+        <div class="card-title">📊 Skill Gap Analysis</div>
+        <div class="chart-container"><canvas id="chartSkillGap"></canvas></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">📋 Semua Rekomendasi Karir</div>
+      <div class="table-container">
+        <table>
+          <thead><tr><th>Profesi</th><th>Deskripsi</th><th>RIASEC</th><th>Match</th></tr></thead>
+          <tbody>
+            ${careers.map(c => `<tr>
+              <td><strong>${c.name}</strong></td>
+              <td>${c.desc}</td>
+              <td><span class="badge badge-blue">${c.riasec}</span></td>
+              <td><span class="badge ${c.match>=70?'badge-green':c.match>=50?'badge-amber':'badge-red'}">${c.match}%</span></td>
+            </tr>`).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>`;
+}
+
+// ===================== STUDENTS LIST (non-siswa) =====================
+function renderStudents() {
+  return `
+    <h2 class="page-title">Data Siswa</h2>
+    <p class="page-subtitle">Daftar seluruh siswa dan informasi lengkap</p>
+    <div class="toolbar">
+      <div class="search-box"><input type="text" id="studentSearch" placeholder="Cari siswa..." oninput="filterStudentTable()"></div>
+      <select id="studentClassFilter" onchange="filterStudentTable()">
+        <option value="">Semua Kelas</option>
+        ${[...new Set(getAllStudents().map(s=>s.class))].map(c=>`<option value="${c}">${c}</option>`).join('')}
+      </select>
+      <button class="btn btn-primary btn-sm" onclick="printPage()">🖨️ Cetak</button>
+    </div>
+    <div class="card">
+      <div class="table-container">
+        <table>
+          <thead><tr><th>No</th><th>Nama</th><th>Kelas</th><th>NIS</th><th>JK</th><th>Rata-rata</th><th>Kehadiran</th><th>Holland</th><th>Aksi</th></tr></thead>
+          <tbody id="studentTableBody">
+            ${renderStudentRows(getAllStudents())}
+          </tbody>
+        </table>
+      </div>
+    </div>`;
+}
+
+function renderStudentRows(students) {
+  return students.map((s, i) => `<tr>
+    <td>${i+1}</td>
+    <td><strong>${s.name}</strong></td>
+    <td>${s.class}</td>
+    <td>${s.nis}</td>
+    <td>${s.gender === 'L' ? '♂️' : '♀️'}</td>
+    <td><span class="badge ${getStudentAvg(s)>=80?'badge-green':getStudentAvg(s)>=70?'badge-amber':'badge-red'}">${getStudentAvg(s).toFixed(1)}</span></td>
+    <td>${s.attendance.hadir}%</td>
+    <td><span class="badge badge-blue">${getTopHolland(s)}</span></td>
+    <td><button class="btn btn-sm btn-outline" onclick="viewStudentDetail(${s.id})">👁️ Detail</button></td>
+  </tr>`).join('');
+}
+
+function filterStudentTable() {
+  const search = document.getElementById('studentSearch').value.toLowerCase();
+  const cls = document.getElementById('studentClassFilter').value;
+  const filtered = getAllStudents().filter(s => {
+    if (cls && s.class !== cls) return false;
+    if (search && !s.name.toLowerCase().includes(search) && !s.nis.includes(search)) return false;
+    return true;
+  });
+  document.getElementById('studentTableBody').innerHTML = renderStudentRows(filtered);
+}
+
+function viewStudentDetail(id) {
+  const s = appData.students.find(st => st.id === id);
+  if (!s) return;
+  openModal(`Detail Siswa: ${s.name}`, `
+    <div class="profile-header">
+      <div class="profile-avatar" style="width:64px;height:64px;font-size:28px;">${s.photo}</div>
+      <div class="profile-info"><h2 style="font-size:18px;">${s.name}</h2><p>${s.class} • NIS: ${s.nis}</p></div>
+    </div>
+    <div class="info-grid">
+      <div class="info-item"><label>Rata-rata Nilai</label><span>${getStudentAvg(s).toFixed(1)}</span></div>
+      <div class="info-item"><label>Kehadiran</label><span>${s.attendance.hadir}%</span></div>
+      <div class="info-item"><label>Holland Dominan</label><span>${getTopHolland(s)}</span></div>
+      <div class="info-item"><label>MBTI</label><span>${s.mbti}</span></div>
+      <div class="info-item"><label>Target Jurusan</label><span>${s.iacp.targetJurusan}</span></div>
+      <div class="info-item"><label>Target Profesi</label><span>${s.iacp.targetProfesi}</span></div>
+      <div class="info-item"><label>Total Prestasi</label><span>${s.achievements.length}</span></div>
+      <div class="info-item"><label>Sertifikat</label><span>${s.certificates.length}</span></div>
+    </div>
+  `, `<button class="btn btn-outline" onclick="closeModal()">Tutup</button>`);
+}
+
+// ===================== COUNSELING =====================
+function renderCounseling() {
+  return `
+    <h2 class="page-title">Catatan Konseling</h2>
+    <p class="page-subtitle">Manajemen catatan konseling siswa</p>
+    <div class="toolbar">
+      <select id="counselStudentSelect">
+        <option value="">Pilih Siswa</option>
+        ${getAllStudents().map(s => `<option value="${s.id}">${s.name} (${s.class})</option>`).join('')}
+      </select>
+      <button class="btn btn-primary btn-sm" onclick="addCounselingNote()">+ Tambah Catatan</button>
+    </div>
+    <div class="card">
+      <div class="table-container">
+        <table>
+          <thead><tr><th>Siswa</th><th>Tanggal</th><th>Kategori</th><th>Catatan</th><th>Aksi</th></tr></thead>
+          <tbody id="counselingTableBody">
+            ${renderCounselingRows()}
+          </tbody>
+        </table>
+      </div>
+    </div>`;
+}
+
+function renderCounselingRows() {
+  const all = getAllStudents().flatMap(s => s.counselingNotes.map(n => ({ ...n, studentName: s.name, studentId: s.id })));
+  if (all.length === 0) return '<tr><td colspan="5" class="text-center" style="color:var(--text-light);">Belum ada catatan konseling</td></tr>';
+  return all.sort((a, b) => b.date.localeCompare(a.date)).map(n => `<tr>
+    <td>${n.studentName}</td><td>${n.date}</td><td><span class="badge badge-blue">${n.category}</span></td><td>${n.note}</td>
+    <td><button class="btn btn-sm btn-danger" onclick="deleteCounselingNote(${n.studentId},'${n.date}')">🗑️</button></td>
+  </tr>`).join('');
+}
+
+function addCounselingNote() {
+  const sid = parseInt(document.getElementById('counselStudentSelect').value);
+  if (!sid) { showToast('Pilih siswa terlebih dahulu!', 'error'); return; }
+  openModal('Tambah Catatan Konseling', `
+    <div class="form-group"><label>Kategori</label><select id="cnCat"><option>Akademik</option><option>Personal</option><option>Karir</option><option>Sosial</option><option>Keluarga</option></select></div>
+    <div class="form-group"><label>Catatan</label><textarea id="cnNote" placeholder="Isi catatan konseling..."></textarea></div>
+  `, () => {
+    const s = appData.students.find(st => st.id === sid);
+    s.counselingNotes.push({ date: new Date().toISOString().split('T')[0], category: document.getElementById('cnCat').value, note: document.getElementById('cnNote').value });
+    saveData(appData); closeModal(); navigateTo('counseling'); showToast('Catatan konseling ditambahkan!', 'success');
+  });
+}
+
+function deleteCounselingNote(sid, date) {
+  const s = appData.students.find(st => st.id === sid);
+  s.counselingNotes = s.counselingNotes.filter(n => n.date !== date);
+  saveData(appData); navigateTo('counseling'); showToast('Catatan dihapus.', 'info');
+}
+
+// ===================== HELPER FUNCTIONS =====================
+function getStudentAvg(s) {
+  const avgs = SUBJECTS.map(sub => {
+    const g = s.grades[sub];
+    return (g.tugas + g.uts + g.uas) / 3;
+  });
+  return avgs.reduce((a, b) => a + b, 0) / avgs.length;
+}
+
+function getTopHolland(s) {
+  const sorted = Object.entries(s.hollandCode).sort((a, b) => b[1] - a[1]);
+  return sorted.slice(0, 2).map(x => x[0]).join('');
+}
+
+function getTopMI(s) {
+  const sorted = Object.entries(s.multipleIntelligence).sort((a, b) => b[1] - a[1]);
+  return sorted[0][0];
+}
+
+function renderIACPProgress(s) {
+  const targetAvg = Object.values(s.iacp.targetNilai).reduce((a, b) => a + b, 0) / Object.values(s.iacp.targetNilai).length;
+  const actualAvg = getStudentAvg(s);
+  const progress = Math.min(Math.round((actualAvg / targetAvg) * 100), 100);
+  return `
+    <div style="margin-bottom:12px;">
+      <div style="display:flex;justify-content:space-between;font-size:13px;">
+        <span>Target Rata-rata: ${targetAvg.toFixed(1)}</span><span>Actual: ${actualAvg.toFixed(1)}</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill ${progress>=80?'green':'amber'}" style="width:${progress}%"></div></div>
+      <div style="text-align:center;font-size:12px;color:var(--text-light);">${progress}% tercapai</div>
+    </div>
+    <div style="margin-top:16px;">
+      <strong style="font-size:13px;">📅 Timeline Mendatang:</strong>
+      ${s.iacp.timeline.slice(0, 2).map(t => `<div style="padding:8px;background:var(--bg);border-radius:6px;margin-top:8px;font-size:12px;">
+        <span style="color:var(--accent);font-weight:600;">${t.date}</span> — ${t.desc}
+      </div>`).join('')}
+    </div>`;
+}
+
+// ===================== MODAL SYSTEM =====================
+function openModal(title, bodyHtml, onConfirm) {
+  document.getElementById('modalTitle').textContent = title;
+  document.getElementById('modalBody').innerHTML = bodyHtml;
+  document.getElementById('modalFooter').innerHTML = `
+    <button class="btn btn-outline" onclick="closeModal()">Batal</button>
+    <button class="btn btn-primary" id="modalConfirmBtn">💾 Simpan</button>`;
+  document.getElementById('modalOverlay').classList.add('show');
+  if (onConfirm) {
+    document.getElementById('modalConfirmBtn').onclick = onConfirm;
+  }
+  // If custom footer
+  if (typeof onConfirm === 'string') {
+    document.getElementById('modalFooter').innerHTML = onConfirm;
+  }
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('show');
+}
+
+// Close modal on overlay click
+document.getElementById('modalOverlay').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+// ===================== TOAST SYSTEM =====================
+function showToast(message, type = 'info') {
+  const container = document.getElementById('toastContainer');
+  const toast = document.createElement('div');
+  toast.className = `toast toast-${type}`;
+  const icons = { success: '✅', error: '❌', info: 'ℹ️', warning: '⚠️' };
+  toast.innerHTML = `<span>${icons[type] || 'ℹ️'}</span> ${message}`;
+  container.appendChild(toast);
+  setTimeout(() => { toast.style.opacity = '0'; toast.style.transform = 'translateX(100%)'; setTimeout(() => toast.remove(), 300); }, 3000);
+}
+
+function printPage() { window.print(); }
+
+// ===================== CHART INITIALIZATION =====================
+const chartColors = ['#1565C0','#42A5F5','#0D47A1','#2E7D32','#F57F17','#C62828','#6A1B9A','#00838F','#EF6C00','#4E342E'];
+
+function initPageCharts(pageId) {
+  if (pageId === 'dashboard') initDashboardCharts();
+  // Other pages init charts on demand
+}
+
+function initDashboardCharts() {
+  const role = currentUser.role;
+  if (role === 'Siswa') {
+    const s = getMyStudent();
+    if (s) {
+      initBarChart('chartStudentGrades', SUBJECTS, SUBJECTS.map(sub => {
+        const g = s.grades[sub]; return +((g.tugas + g.uts + g.uas) / 3).toFixed(1);
+      }), 'Rata-rata Nilai');
+      initRadarChart('chartStudentMI', MI_TYPES, MI_TYPES.map(t => s.multipleIntelligence[t]));
+      // Career recs
+      const careers = calculateCareerMatch(s).slice(0, 3);
+      document.getElementById('dashboardCareerRecs').innerHTML = careers.map(c => `
+        <div class="career-card">
+          <div class="match-circle ${c.match>=70?'match-high':c.match>=50?'match-mid':'match-low'}">${c.match}%</div>
+          <div class="career-info"><h4>${c.name}</h4><p>${c.desc}</p></div>
+        </div>`).join('');
+    }
+  } else if (role === 'Guru' || role === 'Admin') {
+    const prefix = role === 'Admin' ? 'Admin' : '';
+    const classes = [...new Set(getAllStudents().map(s => s.class))];
+    const classAvgs = classes.map(c => {
+      const cs = getAllStudents().filter(s => s.class === c);
+      return +(cs.reduce((a, s) => a + getStudentAvg(s), 0) / cs.length).toFixed(1);
+    });
+    const classAtt = classes.map(c => {
+      const cs = getAllStudents().filter(s => s.class === c);
+      return +(cs.reduce((a, s) => a + s.attendance.hadir, 0) / cs.length).toFixed(1);
+    });
+    initBarChart(`chart${prefix}ClassAvg`, classes, classAvgs, 'Rata-rata Nilai');
+    initBarChart(`chart${prefix}ClassAttendance`, classes, classAtt, 'Kehadiran (%)');
+    if (role === 'Admin') {
+      // Achievement chart
+      const levels = ['Sekolah','Kecamatan','Kabupaten','Provinsi','Nasional','Internasional'];
+      const levelCounts = levels.map(l => getAllStudents().reduce((a, s) => a + s.achievements.filter(x => x.level === l).length, 0));
+      initBarChart('chartAdminAchievement', levels, levelCounts, 'Jumlah Prestasi');
+      // Holland distribution
+      const hollandKeys = Object.keys(RIASEC);
+      const hollandAvg = hollandKeys.map(k => +(getAllStudents().reduce((a, s) => a + s.hollandCode[k], 0) / getAllStudents().length).toFixed(1));
+      initBarChart('chartAdminHolland', hollandKeys.map(k => `${k}-${RIASEC[k].name}`), hollandAvg, 'Rata-rata Skor');
+    }
+  } else if (role === 'Guru BK') {
+    const hollandKeys = Object.keys(RIASEC);
+    const hollandAvg = hollandKeys.map(k => +(getAllStudents().reduce((a, s) => a + s.hollandCode[k], 0) / getAllStudents().length).toFixed(1));
+    initBarChart('chartHollandDist', hollandKeys.map(k => `${k}-${RIASEC[k].name}`), hollandAvg, 'Rata-rata Skor');
+    initBarChart('chartMIOverview', getAllStudents().map(s => s.name.split(' ')[0]), getAllStudents().map(s => {
+      const vals = Object.values(s.multipleIntelligence);
+      return +(vals.reduce((a, b) => a + b, 0) / vals.length).toFixed(1);
+    }), 'Rata-rata MI');
+  } else if (role === 'Pembina') {
+    const levels = ['Sekolah','Kecamatan','Kabupaten','Provinsi','Nasional','Internasional'];
+    const levelCounts = levels.map(l => getAllStudents().reduce((a, s) => a + s.achievements.filter(x => x.level === l).length, 0));
+    initBarChart('chartAchievementLevel', levels, levelCounts, 'Jumlah Prestasi');
+  }
+}
+
+function initAcademicsCharts(s) {
+  initAttendanceChart(s);
+  initGradeProgressChart(s);
+}
+
+function initAttendanceChart(s) {
+  if (chartInstances.attendancePie) chartInstances.attendancePie.destroy();
+  const ctx = document.getElementById('chartAttendancePie');
+  if (!ctx) return;
+  chartInstances.attendancePie = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: ['Hadir', 'Izin', 'Sakit', 'Alpha'],
+      datasets: [{ data: [s.attendance.hadir, s.attendance.izin, s.attendance.sakit, s.attendance.alpha], backgroundColor: ['#2E7D32','#42A5F5','#F57F17','#C62828'] }]
+    },
+    options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
+  });
+}
+
+function initGradeProgressChart(s) {
+  if (chartInstances.gradeProgress) chartInstances.gradeProgress.destroy();
+  const ctx = document.getElementById('chartGradeProgress');
+  if (!ctx) return;
+  const labels = ['Harian 1','Harian 2','Harian 3','Harian 4','Harian 5'];
+  const datasets = SUBJECTS.slice(0, 5).map((sub, i) => ({
+    label: sub,
+    data: s.grades[sub].harian,
+    borderColor: chartColors[i],
+    backgroundColor: chartColors[i] + '20',
+    tension: 0.4,
+    fill: false
+  }));
+  chartInstances.gradeProgress = new Chart(ctx, {
+    type: 'line',
+    data: { labels, datasets },
+    options: { responsive: true, plugins: { legend: { position: 'bottom' } }, scales: { y: { beginAtZero: false, min: 40, max: 100 } } }
+  });
+}
+
+function initTalentCharts(s) {
+  initRadarChart('chartMI', MI_TYPES, MI_TYPES.map(t => s.multipleIntelligence[t]));
+  initBarChart('chartHolland', Object.keys(RIASEC).map(k => `${k}-${RIASEC[k].name}`), Object.values(s.hollandCode), 'Skor (%)');
+}
+
+function initIACPCharts(s) {
+  const chartSubs = SUBJECTS.slice(0, 6);
+  const actual = chartSubs.map(sub => { const g = s.grades[sub]; return +((g.tugas + g.uts + g.uas) / 3).toFixed(1); });
+  const target = chartSubs.map(sub => s.iacp.targetNilai[sub] || 80);
+  if (chartInstances.iacpTarget) chartInstances.iacpTarget.destroy();
+  const ctx = document.getElementById('chartIACPTarget');
+  if (!ctx) return;
+  chartInstances.iacpTarget = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: chartSubs,
+      datasets: [
+        { label: 'Nilai Aktual', data: actual, backgroundColor: '#42A5F5' },
+        { label: 'Target', data: target, backgroundColor: '#2E7D32' }
+      ]
+    },
+    options: { responsive: true, plugins: { legend: { position: 'bottom' } }, scales: { y: { beginAtZero: false, min: 50, max: 100 } } }
+  });
+}
+
+function initCareerCharts(s) {
+  const careers = calculateCareerMatch(s).slice(0, 6);
+  const topCareer = careers[0];
+  // Skill gap chart
+  if (chartInstances.skillGap) chartInstances.skillGap.destroy();
+  const ctx = document.getElementById('chartSkillGap');
+  if (!ctx) return;
+  const skills = topCareer.skills;
+  const skillLevels = skills.map(() => r(50, 90));
+  const required = skills.map(() => r(75, 95));
+  chartInstances.skillGap = new Chart(ctx, {
+    type: 'radar',
+    data: {
+      labels: skills,
+      datasets: [
+        { label: 'Level Saat Ini', data: skillLevels, borderColor: '#42A5F5', backgroundColor: 'rgba(66,165,245,0.2)' },
+        { label: 'Dibutuhkan', data: required, borderColor: '#2E7D32', backgroundColor: 'rgba(46,125,50,0.2)' }
+      ]
+    },
+    options: { responsive: true, plugins: { legend: { position: 'bottom' } }, scales: { r: { beginAtZero: true, max: 100 } } }
+  });
+}
+
+function initBarChart(canvasId, labels, data, label) {
+  if (chartInstances[canvasId]) chartInstances[canvasId].destroy();
+  const ctx = document.getElementById(canvasId);
+  if (!ctx) return;
+  chartInstances[canvasId] = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [{ label, data, backgroundColor: labels.map((_, i) => chartColors[i % chartColors.length]), borderRadius: 6 }]
+    },
+    options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
+  });
+}
+
+function initRadarChart(canvasId, labels, data) {
+  if (chartInstances[canvasId]) chartInstances[canvasId].destroy();
+  const ctx = document.getElementById(canvasId);
+  if (!ctx) return;
+  chartInstances[canvasId] = new Chart(ctx, {
+    type: 'radar',
+    data: {
+      labels,
+      datasets: [{ label: 'Skor', data, borderColor: '#1565C0', backgroundColor: 'rgba(21,101,192,0.15)', pointBackgroundColor: '#1565C0' }]
+    },
+    options: { responsive: true, plugins: { legend: { display: false } }, scales: { r: { beginAtZero: true, max: 100, ticks: { stepSize: 20 } } } }
+  });
+}
+
+// ===================== KEYBOARD SHORTCUTS =====================
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeModal();
+  if (e.key === 'Enter' && document.getElementById('loginPage').style.display !== 'none') doLogin();
+});
+
+// ===================== INIT =====================
+// Auto-focus login
+document.getElementById('loginUser').focus();
+</script>
+</body>
+</html>
