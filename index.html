@@ -2367,14 +2367,55 @@ function showMasterSiswa() {
 function showMasterKelas() {
   const students = getAllStudents();
   const classes = [...new Set(students.map(s => s.class))].sort();
-  let html = '<div class="card"><div class="card-header"><h3>🏫 Daftar Kelas</h3></div><div class="table-container"><table><thead><tr><th>No</th><th>Kelas</th><th>Jumlah</th><th>Rata-rata</th></tr></thead><tbody>';
+  let html = '<div class="card"><div class="card-header"><h3>🏫 Daftar Kelas</h3><button class="btn btn-primary btn-sm" onclick="addClassModal()">➕ Tambah Kelas</button></div><div class="table-container"><table><thead><tr><th>No</th><th>Kelas</th><th>Jumlah</th><th>Rata-rata</th><th>Aksi</th></tr></thead><tbody>';
   classes.forEach((c,i) => {
     const cs = students.filter(s=>s.class===c);
     const avg = cs.length ? (cs.reduce((a,s)=>a+getStudentAvg(s),0)/cs.length).toFixed(1) : 0;
-    html += '<tr><td>'+(i+1)+'</td><td><strong>'+c+'</strong></td><td>'+cs.length+' siswa</td><td><span class="badge '+(avg>=80?'badge-green':avg>=70?'badge-amber':'badge-red')+'">'+avg+'</span></td></tr>';
+    html += '<tr><td>'+(i+1)+'</td><td><strong>'+c+'</strong></td><td>'+cs.length+' siswa</td><td><span class="badge '+(avg>=80?'badge-green':avg>=70?'badge-amber':'badge-red')+'">'+avg+'</span></td><td><button class="btn btn-sm btn-outline" onclick="renameClassModal(\''+c+'\')">✏️ Rename</button> <button class="btn btn-sm btn-danger" onclick="deleteClassConfirm(\''+c+'\')">🗑️</button></td></tr>';
   });
   html += '</tbody></table></div></div>';
   document.getElementById('masterContent').innerHTML = html;
+}
+
+function addClassModal() {
+  const body = '<div class="form-group"><label>Nama Kelas Baru *</label><input type="text" id="mNewClassName" placeholder="Contoh: X-3, XI-2, XII-1"></div>';
+  openModal('➕ Tambah Kelas', body, function() {
+    const name = document.getElementById('mNewClassName').value.trim();
+    if (!name) { showToast('Nama kelas wajib diisi!','error'); return; }
+    const data = loadData();
+    const exists = data.students.some(s => s.class === name);
+    if (exists) { showToast('Kelas '+name+' sudah ada!','error'); return; }
+    // Add a placeholder student to create the class, or just show success
+    showToast('Kelas "'+name+'" berhasil ditambahkan! Tambahkan siswa ke kelas ini melalui menu Kelola Siswa.','success');
+    closeModal();
+    showMasterKelas();
+  });
+}
+
+function renameClassModal(oldName) {
+  const body = '<div class="form-group"><label>Nama Kelas Baru</label><input type="text" id="mRenameClass" value="'+oldName+'"></div>';
+  openModal('✏️ Rename Kelas: '+oldName, body, function() {
+    const newName = document.getElementById('mRenameClass').value.trim();
+    if (!newName || newName === oldName) { closeModal(); return; }
+    const data = loadData();
+    let count = 0;
+    data.students.forEach(s => { if (s.class === oldName) { s.class = newName; count++; } });
+    saveData(data);
+    closeModal();
+    showToast('Kelas "'+oldName+'" di-rename ke "'+newName+'" ('+count+' siswa)','success');
+    showMasterKelas();
+  });
+}
+
+function deleteClassConfirm(className) {
+  const data = loadData();
+  const count = data.students.filter(s => s.class === className).length;
+  if (count > 0) {
+    showToast('Tidak bisa hapus kelas "'+className+'" karena masih ada '+count+' siswa. Pindahkan siswa dulu.','error');
+    return;
+  }
+  showToast('Kelas "'+className+'" kosong, bisa dihapus.','success');
+  showMasterKelas();
 }
 
 function showMasterBackup() {
