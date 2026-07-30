@@ -2682,8 +2682,6 @@ function resetAllData() {
   navigateTo('master');
 }
 
-function closeModal(id) { const m = document.getElementById(id); if (m) m.remove(); }
-
 function renderStudents() {
   return `
     <h2 class="page-title">Data Siswa</h2>
@@ -2862,8 +2860,14 @@ function openModal(title, bodyHtml, onConfirm) {
   }
 }
 
-function closeModal() {
-  document.getElementById('modalOverlay').classList.remove('show');
+function closeModal(id) {
+  if (id) {
+    const m = document.getElementById(id);
+    if (m) m.remove();
+  } else {
+    const m = document.getElementById('modalOverlay');
+    if (m) m.classList.remove('show');
+  }
 }
 
 // Close modal on overlay click
