@@ -2322,365 +2322,198 @@ function renderDataMaster() {
   return `
     <h2 class="page-title">Kelola Data Master</h2>
     <p class="page-subtitle">Kelola data siswa, kelas, dan data sistem</p>
-
     <div class="stats-grid">
       <div class="stat-card blue"><div class="stat-icon">👨‍🎓</div><div class="stat-info"><div class="stat-value">${students.length}</div><div class="stat-label">Total Siswa</div></div></div>
       <div class="stat-card green"><div class="stat-icon">🏫</div><div class="stat-info"><div class="stat-value">${classes.length}</div><div class="stat-label">Jumlah Kelas</div></div></div>
-      <div class="stat-card amber"><div class="stat-icon">📚</div><div class="stat-info"><div class="stat-value">${SUBJECTS.length}</div><div class="stat-label">Mata Pelajaran</div></div></div>
-      <div class="stat-card purple"><div class="stat-icon">💼</div><div class="stat-info"><div class="stat-value">26</div><div class="stat-label">Profesi Referensi</div></div></div>
     </div>
-
-    <!-- Tabs -->
     <div class="toolbar" style="gap:8px;flex-wrap:wrap;">
-      <button class="btn btn-primary btn-sm" onclick="showMasterTab('siswa')">👨‍🎓 Kelola Siswa</button>
-      <button class="btn btn-outline btn-sm" onclick="showMasterTab('kelas')">🏫 Kelola Kelas</button>
-      <button class="btn btn-outline btn-sm" onclick="showMasterTab('mapel')">📚 Mata Pelajaran</button>
-      <button class="btn btn-outline btn-sm" onclick="showMasterTab('backup')">💾 Backup & Restore</button>
-      <button class="btn btn-danger btn-sm" onclick="resetAllData()">🗑️ Reset Data</button>
+      <button class="btn btn-primary btn-sm" onclick="showMasterSiswa()">👨‍🎓 Kelola Siswa</button>
+      <button class="btn btn-outline btn-sm" onclick="showMasterKelas()">🏫 Kelola Kelas</button>
+      <button class="btn btn-outline btn-sm" onclick="showMasterBackup()">💾 Backup & Restore</button>
     </div>
-
-    <!-- Kelola Siswa -->
-    <div id="masterTabContent">
-      ${renderMasterSiswa(students, classes)}
-    </div>
+    <div id="masterContent">${renderMasterSiswaHTML(students, classes)}</div>
   `;
 }
 
-function renderMasterSiswa(students, classes) {
+function renderMasterSiswaHTML(students, classes) {
   return `
     <div class="card">
       <div class="card-header">
-        <h3>👨‍🎓 Daftar Siswa</h3>
-        <button class="btn btn-primary btn-sm" onclick="showAddStudentModal()">➕ Tambah Siswa</button>
+        <h3>👨‍🎓 Daftar Siswa (${students.length})</h3>
+        <button class="btn btn-primary btn-sm" onclick="addStudentModal()">➕ Tambah Siswa</button>
       </div>
       <div class="toolbar">
-        <div class="search-box"><input type="text" id="masterSearch" placeholder="Cari siswa..." oninput="filterMasterTable()"></div>
-        <select id="masterClassFilter" onchange="filterMasterTable()">
+        <input type="text" id="masterSearch" placeholder="Cari siswa..." oninput="filterMasterTable()" style="padding:8px 12px;border:1px solid #ddd;border-radius:8px;width:200px;">
+        <select id="masterClassFilter" onchange="filterMasterTable()" style="padding:8px 12px;border:1px solid #ddd;border-radius:8px;">
           <option value="">Semua Kelas</option>
-          ${classes.map(c=>`<option value="${c}">${c}</option>`).join('')}
+          ${classes.map(c=>'<option value="'+c+'">'+c+'</option>').join('')}
         </select>
       </div>
       <div class="table-container">
-        <table>
-          <thead><tr><th>No</th><th>NIS</th><th>Nama</th><th>Kelas</th><th>JK</th><th>Orang Tua</th><th>No. HP</th><th>Aksi</th></tr></thead>
-          <tbody id="masterTableBody">
-            ${students.map((s,i) => `
-              <tr>
-                <td>${i+1}</td>
-                <td>${s.nis}</td>
-                <td><strong>${s.name}</strong></td>
-                <td>${s.class}</td>
-                <td>${s.gender==='L'?'Laki-laki':'Perempuan'}</td>
-                <td>${s.parentName||'-'}</td>
-                <td>${s.phone||'-'}</td>
-                <td style="white-space:nowrap">
-                  <button class="btn btn-sm btn-outline" onclick="editStudentModal(${s.id})">✏️</button>
-                  <button class="btn btn-sm btn-danger" onclick="deleteStudent(${s.id})">🗑️</button>
-                </td>
-              </tr>
-            `).join('')}
-          </tbody>
-        </table>
+        <table><thead><tr><th>No</th><th>NIS</th><th>Nama</th><th>Kelas</th><th>JK</th><th>Orang Tua</th><th>Aksi</th></tr></thead>
+        <tbody id="masterTableBody">
+          ${students.map((s,i) => '<tr><td>'+(i+1)+'</td><td>'+s.nis+'</td><td><strong>'+s.name+'</strong></td><td>'+s.class+'</td><td>'+(s.gender==='L'?'L':'P')+'</td><td>'+(s.parentName||'-')+'</td><td style="white-space:nowrap"><button class="btn btn-sm btn-outline" onclick="editStudentModal('+s.id+')">✏️</button> <button class="btn btn-sm btn-danger" onclick="deleteStudentConfirm('+s.id+')">🗑️</button></td></tr>').join('')}
+        </tbody></table>
       </div>
-    </div>
-  `;
+    </div>`;
 }
 
-function renderMasterKelas(students) {
-  const classes = [...new Set(students.map(s => s.class))].sort();
-  return `
-    <div class="card">
-      <div class="card-header">
-        <h3>🏫 Daftar Kelas</h3>
-        <button class="btn btn-primary btn-sm" onclick="showAddClassModal()">➕ Tambah Kelas</button>
-      </div>
-      <div class="table-container">
-        <table>
-          <thead><tr><th>No</th><th>Nama Kelas</th><th>Jumlah Siswa</th><th>Rata-rata Nilai</th><th>Kehadiran</th></tr></thead>
-          <tbody>
-            ${classes.map((c,i) => {
-              const clsStudents = students.filter(s=>s.class===c);
-              const avg = clsStudents.reduce((a,s)=>a+getStudentAvg(s),0)/clsStudents.length;
-              const att = clsStudents.reduce((a,s)=>a+s.attendance.hadir,0)/clsStudents.length;
-              return `<tr>
-                <td>${i+1}</td>
-                <td><strong>${c}</strong></td>
-                <td>${clsStudents.length} siswa</td>
-                <td><span class="badge ${avg>=80?'badge-green':avg>=70?'badge-amber':'badge-red'}">${avg.toFixed(1)}</span></td>
-                <td>${att.toFixed(0)}%</td>
-              </tr>`;
-            }).join('')}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  `;
-}
-
-function renderMasterMapel() {
-  return `
-    <div class="card">
-      <div class="card-header">
-        <h3>📚 Mata Pelajaran</h3>
-      </div>
-      <div class="table-container">
-        <table>
-          <thead><tr><th>No</th><th>Nama Mata Pelajaran</th><th>Kode</th></tr></thead>
-          <tbody>
-            ${SUBJECTS.map((s,i) => `
-              <tr>
-                <td>${i+1}</td>
-                <td><strong>${s}</strong></td>
-                <td>${s.substring(0,3).toUpperCase()}</td>
-              </tr>
-            `).join('')}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  `;
-}
-
-function renderMasterBackup() {
-  return `
-    <div class="card">
-      <div class="card-header"><h3>💾 Backup & Restore Data</h3></div>
-      <div style="padding:20px">
-        <p style="margin-bottom:16px;color:#546E7A;">Backup data sistem untuk keamanan. Data bisa di-restore kapan saja.</p>
-        <div style="display:flex;gap:12px;flex-wrap:wrap;">
-          <button class="btn btn-primary" onclick="exportData()">📥 Export Data (JSON)</button>
-          <label class="btn btn-outline" style="cursor:pointer">
-            📤 Import Data (JSON)
-            <input type="file" accept=".json" onchange="importData(event)" style="display:none">
-          </label>
-        </div>
-        <div style="margin-top:20px;padding:16px;background:#FFF3E0;border-radius:8px;border-left:4px solid #FF9800;">
-          <strong>⚠️ Perhatian:</strong>
-          <ul style="margin:8px 0 0 20px;color:#546E7A;">
-            <li>Data disimpan di <b>localStorage</b> browser</li>
-            <li>Clear browser = data hilang</li>
-            <li>Selalu backup secara berkala</li>
-            <li>Import akan menimpa data yang ada</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  `;
-}
-
-// Tab switching
-function showMasterTab(tab) {
+function showMasterSiswa() {
   const students = getAllStudents();
   const classes = [...new Set(students.map(s => s.class))].sort();
-  const content = document.getElementById('masterTabContent');
-  document.querySelectorAll('.toolbar .btn').forEach(b => {
-    b.className = b.className.replace('btn-primary','btn-outline');
+  document.getElementById('masterContent').innerHTML = renderMasterSiswaHTML(students, classes);
+}
+
+function showMasterKelas() {
+  const students = getAllStudents();
+  const classes = [...new Set(students.map(s => s.class))].sort();
+  let html = '<div class="card"><div class="card-header"><h3>🏫 Daftar Kelas</h3></div><div class="table-container"><table><thead><tr><th>No</th><th>Kelas</th><th>Jumlah</th><th>Rata-rata</th></tr></thead><tbody>';
+  classes.forEach((c,i) => {
+    const cs = students.filter(s=>s.class===c);
+    const avg = cs.length ? (cs.reduce((a,s)=>a+getStudentAvg(s),0)/cs.length).toFixed(1) : 0;
+    html += '<tr><td>'+(i+1)+'</td><td><strong>'+c+'</strong></td><td>'+cs.length+' siswa</td><td><span class="badge '+(avg>=80?'badge-green':avg>=70?'badge-amber':'badge-red')+'">'+avg+'</span></td></tr>';
   });
-  switch(tab) {
-    case 'siswa': content.innerHTML = renderMasterSiswa(students, classes); break;
-    case 'kelas': content.innerHTML = renderMasterKelas(students); break;
-    case 'mapel': content.innerHTML = renderMasterMapel(); break;
-    case 'backup': content.innerHTML = renderMasterBackup(); break;
-  }
+  html += '</tbody></table></div></div>';
+  document.getElementById('masterContent').innerHTML = html;
+}
+
+function showMasterBackup() {
+  document.getElementById('masterContent').innerHTML = `
+    <div class="card">
+      <div class="card-header"><h3>💾 Backup & Restore</h3></div>
+      <div style="padding:20px">
+        <p style="margin-bottom:16px;color:#546E7A;">Backup data untuk keamanan.</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;">
+          <button class="btn btn-primary" onclick="exportData()">📥 Export JSON</button>
+          <label class="btn btn-outline" style="cursor:pointer">📤 Import JSON <input type="file" accept=".json" onchange="importData(event)" style="display:none"></label>
+        </div>
+      </div>
+    </div>`;
 }
 
 function filterMasterTable() {
-  const search = (document.getElementById('masterSearch')?.value || '').toLowerCase();
-  const cls = document.getElementById('masterClassFilter')?.value || '';
-  const rows = document.querySelectorAll('#masterTableBody tr');
-  rows.forEach(row => {
-    const name = row.children[2]?.textContent?.toLowerCase() || '';
-    const studentClass = row.children[3]?.textContent || '';
-    const matchSearch = !search || name.includes(search);
-    const matchClass = !cls || studentClass === cls;
-    row.style.display = (matchSearch && matchClass) ? '' : 'none';
+  const search = (document.getElementById('masterSearch')?.value||'').toLowerCase();
+  const cls = document.getElementById('masterClassFilter')?.value||'';
+  document.querySelectorAll('#masterTableBody tr').forEach(row => {
+    const name = (row.children[2]?.textContent||'').toLowerCase();
+    const c = row.children[3]?.textContent||'';
+    row.style.display = ((!search || name.includes(search)) && (!cls || c===cls)) ? '' : 'none';
   });
 }
 
-function showAddStudentModal() {
+function addStudentModal() {
   const classes = [...new Set(getAllStudents().map(s => s.class))].sort();
-  const modal = document.createElement('div');
-  modal.className = 'modal-overlay show';
-  modal.id = 'addStudentModal';
-  modal.innerHTML = `
-    <div class="modal" style="max-width:600px">
-      <div class="modal-header">
-        <h3>➕ Tambah Siswa Baru</h3>
-        <button class="modal-close" onclick="closeModal('addStudentModal')">✕</button>
-      </div>
-      <div class="modal-body">
-        <div class="form-grid">
-          <div class="form-group"><label>Nama Lengkap *</label><input type="text" id="newName" placeholder="Nama siswa" required></div>
-          <div class="form-group"><label>NIS *</label><input type="text" id="newNIS" placeholder="Nomor Induk Siswa"></div>
-          <div class="form-group"><label>Kelas *</label><select id="newClass">${classes.map(c=>`<option value="${c}">${c}</option>`).join('')}<option value="__new">+ Kelas Baru</option></select></div>
-          <div class="form-group"><label>Jenis Kelamin *</label><select id="newGender"><option value="L">Laki-laki</option><option value="P">Perempuan</option></select></div>
-          <div class="form-group"><label>Alamat</label><input type="text" id="newAddress" placeholder="Alamat siswa"></div>
-          <div class="form-group"><label>No. HP</label><input type="text" id="newPhone" placeholder="08xxxxxxxxxx"></div>
-          <div class="form-group"><label>Nama Orang Tua</label><input type="text" id="newParentName" placeholder="Nama orang tua/wali"></div>
-          <div class="form-group"><label>No. HP Orang Tua</label><input type="text" id="newParentPhone" placeholder="08xxxxxxxxxx"></div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-outline" onclick="closeModal('addStudentModal')">Batal</button>
-        <button class="btn btn-primary" onclick="saveNewStudent()">💾 Simpan</button>
-      </div>
-    </div>
-  `;
-  document.body.appendChild(modal);
-}
-
-function saveNewStudent() {
-  const name = document.getElementById('newName').value.trim();
-  const nis = document.getElementById('newNIS').value.trim();
-  const classSelect = document.getElementById('newClass');
-  let studentClass = classSelect.value;
-  const newClassName = document.getElementById('newClassName')?.value?.trim();
-  if (studentClass === '__new' && newClassName) studentClass = newClassName;
-  const gender = document.getElementById('newGender').value;
-  const address = document.getElementById('newAddress').value.trim();
-  const phone = document.getElementById('newPhone').value.trim();
-  const parentName = document.getElementById('newParentName').value.trim();
-  const parentPhone = document.getElementById('newParentPhone').value.trim();
-  if (!name || !nis || !studentClass) { showToast('Nama, NIS, dan Kelas wajib diisi!', 'error'); return; }
-  const data = loadData();
-  const newId = Math.max(0, ...data.students.map(s=>s.id)) + 1;
-  const newStudent = {
-    id: newId, name, nis, class: studentClass, gender, address, phone, parentName, parentPhone,
-    photo: gender === 'L' ? '👨' : '👩',
-    grades: {}, attendance: { hadir: 90, izin: 3, sakit: 5, alpha: 2 },
-    teacherNotes: [],
-    hollandCode: { R:50, I:50, A:50, S:50, E:50, C:50 },
-    multipleIntelligence: {}, mbti: 'ENFP',
-    psikotes: { kecerdasan: 100, kepribadian: 'Sanguinis', bakat: 'General' },
-    iacp: { targetJurusan:'', targetProfesi:'', targetNilai:{}, kompetensi:[], timeline:[], mentor:'' },
-    achievements: [], certificates: [], organizations: [],
-    committees: [], memorization: [], portfolio: [], counselingNotes: []
-  };
-  SUBJECTS.forEach(sub => { newStudent.grades[sub] = { tugas:75, uts:75, uas:75, harian:[75,75,75,75,75] }; newStudent.multipleIntelligence[sub] = 50; newStudent.iacp.targetNilai[sub] = 80; });
-  MI_TYPES.forEach(t => { newStudent.multipleIntelligence[t] = 50; });
-  data.students.push(newStudent);
-  saveData(data);
-  closeModal('addStudentModal');
-  showToast(`Siswa "${name}" berhasil ditambahkan!`, 'success');
-  navigateTo('master');
+  const body = `
+    <div class="form-grid">
+      <div class="form-group"><label>Nama Lengkap *</label><input type="text" id="mNewName" placeholder="Nama siswa"></div>
+      <div class="form-group"><label>NIS *</label><input type="text" id="mNewNIS" placeholder="Nomor Induk"></div>
+      <div class="form-group"><label>Kelas *</label><input type="text" id="mNewClass" placeholder="Contoh: X-1" list="classList"><datalist id="classList">${classes.map(c=>'<option value="'+c+'">').join('')}</datalist></div>
+      <div class="form-group"><label>Jenis Kelamin</label><select id="mNewGender"><option value="L">Laki-laki</option><option value="P">Perempuan</option></select></div>
+      <div class="form-group"><label>Alamat</label><input type="text" id="mNewAddr" placeholder="Alamat"></div>
+      <div class="form-group"><label>No. HP</label><input type="text" id="mNewPhone" placeholder="08xxx"></div>
+      <div class="form-group"><label>Orang Tua</label><input type="text" id="mNewParent" placeholder="Nama orang tua"></div>
+      <div class="form-group"><label>No. HP Ortu</label><input type="text" id="mNewParentPh" placeholder="08xxx"></div>
+    </div>`;
+  openModal('➕ Tambah Siswa Baru', body, function() {
+    const name = document.getElementById('mNewName').value.trim();
+    const nis = document.getElementById('mNewNIS').value.trim();
+    const cls = document.getElementById('mNewClass').value.trim();
+    if (!name || !nis || !cls) { showToast('Nama, NIS, dan Kelas wajib diisi!','error'); return; }
+    const data = loadData();
+    const newId = Math.max(0,...data.students.map(s=>s.id))+1;
+    const gender = document.getElementById('mNewGender').value;
+    data.students.push({
+      id:newId, name, nis, class:cls, gender,
+      address:document.getElementById('mNewAddr').value.trim(),
+      phone:document.getElementById('mNewPhone').value.trim(),
+      parentName:document.getElementById('mNewParent').value.trim(),
+      parentPhone:document.getElementById('mNewParentPh').value.trim(),
+      photo:gender==='L'?'👨':'👩',
+      grades:{}, attendance:{hadir:90,izin:3,sakit:5,alpha:2}, teacherNotes:[],
+      hollandCode:{R:50,I:50,A:50,S:50,E:50,C:50}, multipleIntelligence:{}, mbti:'ENFP',
+      psikotes:{kecerdasan:100,kepribadian:'Sanguinis',bakat:'General'},
+      iacp:{targetJurusan:'',targetProfesi:'',targetNilai:{},kompetensi:[],timeline:[],mentor:''},
+      achievements:[], certificates:[], organizations:[], committees:[], memorization:[], portfolio:[], counselingNotes:[]
+    });
+    SUBJECTS.forEach(sub => { data.students[data.students.length-1].grades[sub]={tugas:75,uts:75,uas:75,harian:[75,75,75,75,75]}; data.students[data.students.length-1].multipleIntelligence[sub]=50; data.students[data.students.length-1].iacp.targetNilai[sub]=80; });
+    MI_TYPES.forEach(t => { data.students[data.students.length-1].multipleIntelligence[t]=50; });
+    saveData(data);
+    closeModal();
+    showToast('Siswa "'+name+'" berhasil ditambahkan!','success');
+    navigateTo('master');
+  });
 }
 
 function editStudentModal(id) {
   const data = loadData();
   const s = data.students.find(st => st.id === id);
   if (!s) return;
-  const classes = [...new Set(data.students.map(st => st.class))].sort();
-  const modal = document.createElement('div');
-  modal.className = 'modal-overlay show';
-  modal.id = 'editStudentModal';
-  modal.innerHTML = `
-    <div class="modal" style="max-width:600px">
-      <div class="modal-header">
-        <h3>✏️ Edit Siswa: ${s.name}</h3>
-        <button class="modal-close" onclick="closeModal('editStudentModal')">✕</button>
-      </div>
-      <div class="modal-body">
-        <div class="form-grid">
-          <div class="form-group"><label>Nama Lengkap *</label><input type="text" id="editName" value="${s.name}"></div>
-          <div class="form-group"><label>NIS *</label><input type="text" id="editNIS" value="${s.nis}"></div>
-          <div class="form-group"><label>Kelas *</label><select id="editClass">${classes.map(c=>`<option value="${c}" ${c===s.class?'selected':''}>${c}</option>`).join('')}</select></div>
-          <div class="form-group"><label>Jenis Kelamin</label><select id="editGender"><option value="L" ${s.gender==='L'?'selected':''}>Laki-laki</option><option value="P" ${s.gender==='P'?'selected':''}>Perempuan</option></select></div>
-          <div class="form-group"><label>Alamat</label><input type="text" id="editAddress" value="${s.address||''}"></div>
-          <div class="form-group"><label>No. HP</label><input type="text" id="editPhone" value="${s.phone||''}"></div>
-          <div class="form-group"><label>Nama Orang Tua</label><input type="text" id="editParentName" value="${s.parentName||''}"></div>
-          <div class="form-group"><label>No. HP Orang Tua</label><input type="text" id="editParentPhone" value="${s.parentPhone||''}"></div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-outline" onclick="closeModal('editStudentModal')">Batal</button>
-        <button class="btn btn-primary" onclick="saveEditStudent(${s.id})">💾 Simpan Perubahan</button>
-      </div>
-    </div>
-  `;
-  document.body.appendChild(modal);
+  const body = `
+    <div class="form-grid">
+      <div class="form-group"><label>Nama Lengkap *</label><input type="text" id="mEdName" value="${s.name}"></div>
+      <div class="form-group"><label>NIS *</label><input type="text" id="mEdNIS" value="${s.nis}"></div>
+      <div class="form-group"><label>Kelas *</label><input type="text" id="mEdClass" value="${s.class}"></div>
+      <div class="form-group"><label>Jenis Kelamin</label><select id="mEdGender"><option value="L" ${s.gender==='L'?'selected':''}>Laki-laki</option><option value="P" ${s.gender==='P'?'selected':''}>Perempuan</option></select></div>
+      <div class="form-group"><label>Alamat</label><input type="text" id="mEdAddr" value="${s.address||''}"></div>
+      <div class="form-group"><label>No. HP</label><input type="text" id="mEdPhone" value="${s.phone||''}"></div>
+      <div class="form-group"><label>Orang Tua</label><input type="text" id="mEdParent" value="${s.parentName||''}"></div>
+      <div class="form-group"><label>No. HP Ortu</label><input type="text" id="mEdParentPh" value="${s.parentPhone||''}"></div>
+    </div>`;
+  openModal('✏️ Edit: '+s.name, body, function() {
+    s.name = document.getElementById('mEdName').value.trim() || s.name;
+    s.nis = document.getElementById('mEdNIS').value.trim() || s.nis;
+    s.class = document.getElementById('mEdClass').value.trim() || s.class;
+    s.gender = document.getElementById('mEdGender').value;
+    s.address = document.getElementById('mEdAddr').value.trim();
+    s.phone = document.getElementById('mEdPhone').value.trim();
+    s.parentName = document.getElementById('mEdParent').value.trim();
+    s.parentPhone = document.getElementById('mEdParentPh').value.trim();
+    s.photo = s.gender==='L'?'👨':'👩';
+    saveData(data);
+    closeModal();
+    showToast('Data "'+s.name+'" berhasil diupdate!','success');
+    navigateTo('master');
+  });
 }
 
-function saveEditStudent(id) {
+function deleteStudentConfirm(id) {
   const data = loadData();
   const s = data.students.find(st => st.id === id);
   if (!s) return;
-  s.name = document.getElementById('editName').value.trim() || s.name;
-  s.nis = document.getElementById('editNIS').value.trim() || s.nis;
-  s.class = document.getElementById('editClass').value || s.class;
-  s.gender = document.getElementById('editGender').value;
-  s.address = document.getElementById('editAddress').value.trim();
-  s.phone = document.getElementById('editPhone').value.trim();
-  s.parentName = document.getElementById('editParentName').value.trim();
-  s.parentPhone = document.getElementById('editParentPhone').value.trim();
-  s.photo = s.gender === 'L' ? '👨' : '👩';
-  saveData(data);
-  closeModal('editStudentModal');
-  showToast(`Data "${s.name}" berhasil diupdate!`, 'success');
-  navigateTo('master');
-}
-
-function deleteStudent(id) {
-  const data = loadData();
-  const s = data.students.find(st => st.id === id);
-  if (!s) return;
-  if (!confirm(`Yakin ingin menghapus siswa "${s.name}"?`)) return;
+  if (!confirm('Yakin hapus siswa "'+s.name+'"')) return;
   data.students = data.students.filter(st => st.id !== id);
   saveData(data);
-  showToast(`Siswa "${s.name}" berhasil dihapus.`, 'success');
+  showToast('Siswa "'+s.name+'" dihapus.','success');
   navigateTo('master');
-}
-
-function showAddClassModal() {
-  const modal = document.createElement('div');
-  modal.className = 'modal-overlay show';
-  modal.id = 'addClassModal';
-  modal.innerHTML = `
-    <div class="modal" style="max-width:400px">
-      <div class="modal-header"><h3>➕ Tambah Kelas Baru</h3><button class="modal-close" onclick="closeModal('addClassModal')">✕</button></div>
-      <div class="modal-body"><div class="form-group"><label>Nama Kelas *</label><input type="text" id="newClassNameInput" placeholder="Contoh: X-3, XI-2, XII-1"></div></div>
-      <div class="modal-footer"><button class="btn btn-outline" onclick="closeModal('addClassModal')">Batal</button><button class="btn btn-primary" onclick="closeModal('addClassModal'); showToast('Kelas ditambahkan!', 'success');">💾 Simpan</button></div>
-    </div>
-  `;
-  document.body.appendChild(modal);
 }
 
 function exportData() {
   const data = loadData();
-  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-  const url = URL.createObjectURL(blob);
+  const blob = new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
   const a = document.createElement('a');
-  a.href = url;
-  a.download = `acds_backup_${new Date().toISOString().slice(0,10)}.json`;
+  a.href = URL.createObjectURL(blob);
+  a.download = 'acds_backup_'+new Date().toISOString().slice(0,10)+'.json';
   a.click();
-  URL.revokeObjectURL(url);
-  showToast('Data berhasil di-export!', 'success');
+  showToast('Data exported!','success');
 }
 
 function importData(event) {
   const file = event.target.files[0];
   if (!file) return;
-  if (!confirm('Import akan menimpa semua data yang ada. Lanjutkan?')) return;
-  const reader = new FileReader();
-  reader.onload = function(e) {
+  if (!confirm('Import akan menimpa data. Lanjutkan?')) return;
+  const r = new FileReader();
+  r.onload = function(e) {
     try {
-      const data = JSON.parse(e.target.result);
-      if (!data.students || !Array.isArray(data.students)) { showToast('Format file tidak valid!', 'error'); return; }
-      saveData(data);
-      showToast(`Berhasil import ${data.students.length} siswa!`, 'success');
+      const d = JSON.parse(e.target.result);
+      if (!d.students || !Array.isArray(d.students)) { showToast('File tidak valid!','error'); return; }
+      saveData(d);
+      showToast('Berhasil import '+d.students.length+' siswa!','success');
       navigateTo('master');
-    } catch(err) { showToast('Gagal membaca file: ' + err.message, 'error'); }
+    } catch(err) { showToast('Error: '+err.message,'error'); }
   };
-  reader.readAsText(file);
+  r.readAsText(file);
 }
 
-function resetAllData() {
-  if (!confirm('⚠️ PERINGATAN: Semua data akan di-reset ke data awal! Lanjutkan?')) return;
-  if (!confirm('Konfirmasi sekali lagi: Yakin RESET semua data?')) return;
-  localStorage.removeItem(STORAGE_KEY);
-  appData = loadData();
-  showToast('Data berhasil di-reset!', 'success');
-  navigateTo('master');
-}
 
 function renderStudents() {
   return `
